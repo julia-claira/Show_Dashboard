@@ -5,6 +5,7 @@
 
 
 from flask import Flask,jsonify
+import pandas as pd
 
 
 # In[3]:
@@ -24,7 +25,9 @@ hello_dict={"Hello":"World"}
 
 @app.route("/")
 def home():
-    return 'Hi'
+    a={"Table":[5,2,6],"Test":['candy','toys','tacos']}
+    #return "4"
+    return jsonify(pd.DataFrame(a).to_json(orient="table"))
 
 
 # In[6]:
@@ -39,7 +42,7 @@ def normal():
 
 
 @app.route("/jsonify")
-def normal():
+def json():
     return jsonify(hello_dict)
 
 
