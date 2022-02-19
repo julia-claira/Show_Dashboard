@@ -4,8 +4,15 @@
 # In[2]:
 
 
-from flask import Flask,jsonify
+from flask import (
+    Flask,
+    render_template,
+    jsonify,
+    request)
 import pandas as pd
+
+# import function
+from .show_data import return_table
 
 
 # In[3]:
@@ -25,17 +32,22 @@ hello_dict={"Hello":"World"}
 
 @app.route("/")
 def home():
-    a={"Table":[5,2,6],"Test":['candy','toys','tacos']}
+    return render_template("index.html")
+    #a={"Table":[5,2,6],"Test":['candy','toys','tacos']}
     #return "4"
-    return jsonify(pd.DataFrame(a).to_json(orient="table"))
+    #return return_table().to_json(orient="table")
 
 
 # In[6]:
 
 
-@app.route("/normal")
-def normal():
-    return hello_dict
+# Create api route for ml data by REGION
+@app.route("/api/region", methods=["GET"])
+def apiml():
+      
+    region = request.args.get("region", type=str)
+    test={"dd3":"Alexander"}
+    return jsonify(test[region])
 
 
 # In[12]:
