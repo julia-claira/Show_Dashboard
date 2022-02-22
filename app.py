@@ -54,8 +54,8 @@ def apiml():
 
 
 @app.route("/jsonify")
-def json():
-    return jsonify(hello_dict)
+def rt():
+    return return_table().to_json(orient='records')
 
 
 # In[14]:
