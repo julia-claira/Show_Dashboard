@@ -11,7 +11,7 @@ var shapeField= d3.select("#shape");//filter for shape
 shapeField.on("change", filteredTable);
 
 var countryField= d3.select("#country");//filter for country
-countryField.on("change", filteredTable);
+//countryField.on("change", filteredTable);
 
 var stateField= d3.select("#state");//filter for state
 stateField.on("change", filteredTable);
@@ -176,4 +176,4 @@ columnNames.forEach(columnName => row.append("th").text(columnName));
 //populate table on load
 var url = `/api/region?region=${"dd3"}`;
 d3.json(url).then(function (response) {alert(response)})
-resetTable();
+//resetTable();
