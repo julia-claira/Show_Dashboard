@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+#search - generation - gender - country
 # In[2]:
 
 
@@ -47,7 +47,8 @@ def apiml():
       
     region = request.args.get("region", type=str)
     test={"dd3":"Alexander"}
-    return jsonify(test[region])
+    #return ('cooco')
+    return return_table(region).to_json(orient='records')
 
 
 # In[12]:

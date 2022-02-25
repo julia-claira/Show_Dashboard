@@ -11,7 +11,7 @@ var shapeField= d3.select("#shape");//filter for shape
 shapeField.on("change", filteredTable);
 
 var countryField= d3.select("#country");//filter for country
-//countryField.on("change", filteredTable);
+countryField.on("change", new_select);
 
 var stateField= d3.select("#state");//filter for state
 stateField.on("change", filteredTable);
@@ -168,12 +168,30 @@ var tbody=d3.select("tbody");
 
 
 //Append header column names for Table
-var columnNames=['Date/Time', 'City', 'State', 'Country', 'Shape','Duration-Minutes:','Comments'];
+var columnNames=['Title', 'Views', 'Category', 'Production Country', 'Premiere','Genres:'];
 var row = thead.append("tr");
 columnNames.forEach(columnName => row.append("th").text(columnName));
 
-
-//populate table on load
-var url = `/api/region?region=${"dd3"}`;
-d3.json(url).then(function (response) {alert(response)})
+function new_select(){
+  
+  //tbody.html(""); 
+  //populate table on load
+  alert(countryField.property("value"))
+  row_count=0
+  var url = `/api/region?region=${countryField.property("value")}`;
+  d3.json(url).then(function (response) {
+    //console.log(response)
+    response.forEach(shows => {
+      row_count=row_count+1
+      if (row_count<100){
+        var row =tbody.append("tr");
+        Object.entries(shows).forEach(([key,value]) => {
+          if (key!='generation' && key!='gender' && key!='viewing_country'){
+            row.append("td").text(value)}; 
+        }) 
+      } 
+    }) 
+  })
+}
+//!!!!!!!!!!!!!!!!!!!!need to clear function
 //resetTable();
