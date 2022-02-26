@@ -13,11 +13,11 @@ shapeField.on("change", filteredTable);
 var countryField= d3.select("#country");//filter for country
 countryField.on("change", new_select);
 
-var stateField= d3.select("#state");//filter for state
-stateField.on("change", filteredTable);
+var genderField= d3.select("#gender");//filter for state
+genderField.on("change", new_select);
 
-var cityField= d3.select("#city");//filter for city
-cityField.on("change", filteredTable);
+var generationField= d3.select("#generation");//filter for city
+generationField.on("change", new_select);
 
 
 //Function For Dynamic Dropdown Menus -- State Dropdown options update if Country changes///City Dropdown options update if State changes
@@ -173,12 +173,12 @@ var row = thead.append("tr");
 columnNames.forEach(columnName => row.append("th").text(columnName));
 
 function new_select(){
-  
+  d3.select("tbody").html("")
   //tbody.html(""); 
   //populate table on load
-  alert(countryField.property("value"))
+
   row_count=0
-  var url = `/api/region?region=${countryField.property("value")}`;
+  var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}`;
   d3.json(url).then(function (response) {
     //console.log(response)
     response.forEach(shows => {
