@@ -193,5 +193,5 @@ function new_select(){
     }) 
   })
 }
-//!!!!!!!!!!!!!!!!!!!!need to clear function
-//resetTable();
+//initiate on load
+new_select();
