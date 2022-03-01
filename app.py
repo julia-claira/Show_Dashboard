@@ -48,8 +48,9 @@ def apiml():
     region = request.args.get("region", type=str)
     gender = request.args.get("gender", type=str)
     generation = request.args.get("generation", type=str)
+    category = request.args.get("category", type=str)
     #return ('cooco')
-    return return_table(region,gender,generation).to_json(orient='records')
+    return return_table(region,gender,generation,category).to_json(orient='records')
 
 
 # In[12]:

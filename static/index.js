@@ -7,8 +7,8 @@ resetButton.on("click",resetTable);
 var dateField= d3.select("#date-field");//filter for date
 dateField.on("change", filteredTable);
 
-var shapeField= d3.select("#shape");//filter for shape
-shapeField.on("change", filteredTable);
+var categoryField= d3.select("#category");//filter for shape
+categoryField.on("change", new_select);
 
 var countryField= d3.select("#country");//filter for country
 countryField.on("change", new_select);
@@ -168,7 +168,7 @@ var tbody=d3.select("tbody");
 
 
 //Append header column names for Table
-var columnNames=['Title', 'Views', 'Category', 'Production Country', 'Premiere','Genres:'];
+var columnNames=['Title', 'Category', 'Production Country', 'Premiere','Genres:','Views'];
 var row = thead.append("tr");
 columnNames.forEach(columnName => row.append("th").text(columnName));
 
@@ -178,7 +178,7 @@ function new_select(){
   //populate table on load
 
   row_count=0
-  var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}`;
+  var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
     //console.log(response)
     response.forEach(shows => {
@@ -186,7 +186,7 @@ function new_select(){
       if (row_count<100){
         var row =tbody.append("tr");
         Object.entries(shows).forEach(([key,value]) => {
-          if (key!='generation' && key!='gender' && key!='viewing_country'){
+          if (key!='generation' && key!='gender' && key!='viewing_country' && key!='view'){
             row.append("td").text(value)}; 
         }) 
       } 
