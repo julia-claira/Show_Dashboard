@@ -1,6 +1,16 @@
 //The Filter Selection Form------------------------------------------------------------------
 
 //User Events
+genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animation','Fantasy','Supernatural','History','Vikings','HBO','Dragons','Netflix',
+ 'Wizards','Superhero','DC','Crime','Case of the week','Science Fiction','Postapocalypse','Mystery','Drama','Gangsters','For Older Kids','Doctors',
+ 'Drug Cartel','Serial killer','Vampires','Action','Prison','Teens','Politics','Buddies','Horror','Terorrism','Future','Disaster','Business','For babies','Murder',
+ 'Independent Comics','Journalists','Witch','Cyberpunk','Disney+','Space opera','Space','Music','Time travel','Robots','Animals','Treasure hunt','Princesses',
+ 'Crime Drama','Fashion','Hulu','Forbidden Love','Lawyers','Marvel','Kings and Queens','Spies','For Boys','Family Ties','Biopic','Musicians','Werewolves','Coming of Age',
+ 'Christian','Cry movie','Zombies','Ghosts','HBO Max','Sci-fi drama','Amazon','War','World War II','Survival','Situation','Aliens','Iraq War','Magical Realism','Romance',
+ 'Cancer','Documentary','Action Crime','Racism','Far East','Weed','Fantasy Adventure','Relationship','Ancient Rome','Thriller','Dramedy','Disapperance',
+ 'Rom Com','Writers','Body switch','Sex','Geniuses','Conspiracy','Holocaust','Break-up']
+ genre_list.sort()
+
 var resetButton = d3.select("#reset");//resets filter
 resetButton.on("click",resetTable);
 
@@ -181,16 +191,21 @@ function new_select(){
   var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
     //console.log(response)
+    list_genre=[]
     response.forEach((shows => {
       row_count=row_count+1
+      
       if (row_count<100){
         var row =tbody.append("tr")
         Object.entries(shows).forEach(([key,value]) => {
+          
+
           if (key!='generation' && key!='gender' && key!='viewing_country' && key!='view'){
             if (key=='genre'){
               temp_value=""
               temp_count=0
               value.split("|").forEach((item)=> {
+                if (!list_genre.includes(item)){list_genre.push(item)}
                 if(temp_count>1){
                   temp_value=temp_value+", "}
                 temp_count++
@@ -205,7 +220,13 @@ function new_select(){
         })
       } 
     }))
+    //console.log(list_genre)
   })
 }
 //initiate on load
+d3.select('#genre').append("option").text('All').property("value",'All')
+genre_list.forEach(item=>{
+  d3.select('#genre').append("option").text(item).property("value",item)
+})
+
 new_select();
