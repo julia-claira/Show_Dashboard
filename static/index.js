@@ -9,13 +9,13 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
  'Christian','Cry movie','Zombies','Ghosts','HBO Max','Sci-fi drama','Amazon','War','World War II','Survival','Situation','Aliens','Iraq War','Magical Realism','Romance',
  'Cancer','Documentary','Action Crime','Racism','Far East','Weed','Fantasy Adventure','Relationship','Ancient Rome','Thriller','Dramedy','Disapperance',
  'Rom Com','Writers','Body switch','Sex','Geniuses','Conspiracy','Holocaust','Break-up']
- genre_list.sort()
 
-var resetButton = d3.select("#reset");//resets filter
-resetButton.on("click",resetTable);
 
-var dateField= d3.select("#date-field");//filter for date
-dateField.on("change", filteredTable);
+//var resetButton = d3.select("#reset");//resets filter
+//resetButton.on("click",resetTable);
+
+//var dateField= d3.select("#date-field");//filter for date
+//dateField.on("change", filteredTable);
 
 var categoryField= d3.select("#category");//filter for shape
 categoryField.on("change", new_select);
@@ -28,6 +28,10 @@ genderField.on("change", new_select);
 
 var generationField= d3.select("#generation");//filter for city
 generationField.on("change", new_select);
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
 //Function For Dynamic Dropdown Menus -- State Dropdown options update if Country changes///City Dropdown options update if State changes
@@ -213,6 +217,9 @@ function new_select(){
               })
               row.append("td").text(temp_value)
             }
+            else if (key=='views'){
+              row.append("td").text(numberWithCommas(value))
+            }
             else{
               row.append("td").text(value)
             }
@@ -224,9 +231,9 @@ function new_select(){
   })
 }
 //initiate on load
-d3.select('#genre').append("option").text('All').property("value",'All')
-genre_list.forEach(item=>{
-  d3.select('#genre').append("option").text(item).property("value",item)
-})
+//d3.select('#genre').append("option").text('All').property("value",'All')
+//genre_list.forEach(item=>{
+//  d3.select('#genre').append("option").text(item).property("value",item)
+//})
 
 new_select();
