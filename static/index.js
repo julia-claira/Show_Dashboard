@@ -181,16 +181,30 @@ function new_select(){
   var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
     //console.log(response)
-    response.forEach(shows => {
+    response.forEach((shows => {
       row_count=row_count+1
       if (row_count<100){
-        var row =tbody.append("tr");
+        var row =tbody.append("tr")
         Object.entries(shows).forEach(([key,value]) => {
           if (key!='generation' && key!='gender' && key!='viewing_country' && key!='view'){
-            row.append("td").text(value)}; 
-        }) 
+            if (key=='genre'){
+              temp_value=""
+              temp_count=0
+              value.split("|").forEach((item)=> {
+                if(temp_count>1){
+                  temp_value=temp_value+", "}
+                temp_count++
+                temp_value=temp_value+item
+              })
+              row.append("td").text(temp_value)
+            }
+            else{
+              row.append("td").text(value)
+            }
+          } 
+        })
       } 
-    }) 
+    }))
   })
 }
 //initiate on load
