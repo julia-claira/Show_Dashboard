@@ -182,9 +182,9 @@ var tbody=d3.select("tbody");
 
 
 //Append header column names for Table
-var columnNames=['Title', 'Category', 'Production Country', 'Premiere','Genres:','Views'];
-var row = thead.append("tr");
-columnNames.forEach(columnName => row.append("th").text(columnName));
+//var columnNames=['Title', 'Category', 'Production Country', 'Premiere','Genres:','Views'];
+//var row = thead.append("tr");
+//columnNames.forEach(columnName => row.append("th").text(columnName));
 
 function new_select(){
   d3.select("tbody").html("")
@@ -194,13 +194,13 @@ function new_select(){
   row_count=0
   var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
-    //console.log(response)
     list_genre=[]
     response.forEach((shows => {
       row_count=row_count+1
       
       if (row_count<100){
         var row =tbody.append("tr")
+        row.append("td").text(row_count)
         Object.entries(shows).forEach(([key,value]) => {
           
 

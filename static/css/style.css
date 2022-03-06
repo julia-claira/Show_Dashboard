@@ -18,6 +18,8 @@ body {
   overflow: auto;
 }
 
+
+
 /* The footer is positioned at the bottom of the page */
 .footer {
   position: absolute;
@@ -74,7 +76,8 @@ select {
 }
 
 #table-area th {
-  text-align: center;
+  text-align: left;
+  font-weight: bold;
 }
 
 #table-area th:first-child,
@@ -189,6 +192,12 @@ select {
   .hero h1 {
     animation: smaller-title 1.2s forwards linear;
   }
+
+  .pre-scrollable {
+    max-height: 340px;
+    overflow-y: scroll;
+}
+
 }
 
 /* keyframe animations which will be used to animate the title */
@@ -223,3 +232,5 @@ select {
     opacity: 1;
   }
 }
+
+
