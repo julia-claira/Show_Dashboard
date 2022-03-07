@@ -10,7 +10,7 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
  'Cancer','Documentary','Action Crime','Racism','Far East','Weed','Fantasy Adventure','Relationship','Ancient Rome','Thriller','Dramedy','Disapperance',
  'Rom Com','Writers','Body switch','Sex','Geniuses','Conspiracy','Holocaust','Break-up']
 
-
+genre_list_org=['Comedy','Drama','Action','Horror','Science Fiction','Animated','Adventure','Western','Other','Unscripted','Fantasy','Documentary']
 //var resetButton = d3.select("#reset");//resets filter
 //resetButton.on("click",resetTable);
 
