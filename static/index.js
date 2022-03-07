@@ -35,18 +35,15 @@ function numberWithCommas(x) {
 }
 
 function categorize(the_value){
-  console.log(genre_list_org['Science Fiction'])
+  //console.log(genre_list_org['Science Fiction'])
   genre_list_org['Science Fiction']=genre_list_org['Science Fiction']+1
-  switch(the_value) {
-    case 'Science Fiction':
-      console.log('hi')
-      break;
-    case 'Drama':
-      // code block
-      break;
-    default:
-      // code block
+  if(genre_list_org['Science Fiction']!=undefined){
+    genre_list_org[the_value]=genre_list_org[the_value]+1  
   }
+  else {
+    genre_list_org['Other']=genre_list_org['Other']+1 
+  }
+
 
 
 
@@ -136,6 +133,7 @@ function new_select(){
               temp_value=""
               temp_count=0
               value.split("|").forEach((item)=> {
+                if(temp_count==1) categorize(item)
                 if (!list_genre.includes(item)){list_genre.push(item)}
                 if(temp_count>1){
                   temp_value=temp_value+", "}
@@ -163,7 +161,7 @@ function new_select(){
 //  d3.select('#genre').append("option").text(item).property("value",item)
 //})
 createBar();
-categorize('adfafa');
-categorize('Science Fiction');
-if(genre_list_org['Science Fiction']==undefined){console.log('yes!')}
+//categorize('adfafa');
+//categorize('Science Fiction');
+console.log(genre_list_org)
 new_select();
