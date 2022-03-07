@@ -10,7 +10,8 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
  'Cancer','Documentary','Action Crime','Racism','Far East','Weed','Fantasy Adventure','Relationship','Ancient Rome','Thriller','Dramedy','Disapperance',
  'Rom Com','Writers','Body switch','Sex','Geniuses','Conspiracy','Holocaust','Break-up']
 
-genre_list_org=['Comedy','Drama','Action','Horror','Science Fiction','Animated','Adventure','Western','Other','Unscripted','Fantasy','Documentary']
+genre_list_org={'Comedy':0,'Drama':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
+'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0}
 //var resetButton = d3.select("#reset");//resets filter
 //resetButton.on("click",resetTable);
 
@@ -31,6 +32,24 @@ generationField.on("change", new_select);
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function categorize(the_value){
+  console.log(genre_list_org['Science Fiction'])
+  genre_list_org['Science Fiction']=genre_list_org['Science Fiction']+1
+  switch(the_value) {
+    case 'Science Fiction':
+      console.log('hi')
+      break;
+    case 'Drama':
+      // code block
+      break;
+    default:
+      // code block
+  }
+
+
+
 }
 
 function createBar(){
@@ -143,5 +162,8 @@ function new_select(){
 //genre_list.forEach(item=>{
 //  d3.select('#genre').append("option").text(item).property("value",item)
 //})
-createBar()
+createBar();
+categorize('adfafa');
+categorize('Science Fiction');
+if(genre_list_org['Science Fiction']==undefined){console.log('yes!')}
 new_select();
