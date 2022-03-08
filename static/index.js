@@ -117,7 +117,7 @@ function pieChart(my_genres){
     type: "pie",
     values: x,
     labels: y,
-    hole: 0.25,
+    hole: 0.5,
     pull: [0, 0, 0, 0, 0,0.2,0,0],
     direction: 'clockwise',
     marker: {
@@ -146,9 +146,26 @@ function pieChart(my_genres){
   var data = [traceA];
 
   var layout = {
-    title: "Area Under Forest for Different Countries",
+    title: {
+      text:"Genre Preference",
+      font: {
+        family: 'Lato',
+        color: 'white',
+        size: 20
+      }
+    },
     paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)'
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    legend: {
+      x: 1,
+      xanchor: 'right',
+      y: 1,
+      font: {
+        family: 'Lato',
+        color: 'white',
+        size: 18
+      }
+    }
   };
 
   Plotly.plot(pieDiv, data, layout);
