@@ -10,8 +10,8 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
  'Cancer','Documentary','Action Crime','Racism','Far East','Weed','Fantasy Adventure','Relationship','Ancient Rome','Thriller','Dramedy','Disapperance',
  'Rom Com','Writers','Body switch','Sex','Geniuses','Conspiracy','Holocaust','Break-up']
 
-genre_list_org={'Comedy':0,'Drama':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
-'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0}
+genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
+'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 //var resetButton = d3.select("#reset");//resets filter
 //resetButton.on("click",resetTable);
 
@@ -36,8 +36,8 @@ function numberWithCommas(x) {
 
 function categorize(the_value){
   //console.log(genre_list_org['Science Fiction'])
-  genre_list_org['Science Fiction']=genre_list_org['Science Fiction']+1
-  if(genre_list_org['Science Fiction']!=undefined){
+  //genre_list_org['Science Fiction']=genre_list_org['Science Fiction']+1
+  if(genre_list_org[the_value]!=undefined){
     genre_list_org[the_value]=genre_list_org[the_value]+1  
   }
   else {
@@ -92,7 +92,64 @@ function createBar(){
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 };
+function pieChart(my_genres){
+  var pieDiv = document.getElementById("pie-chart");
+  var x=[]
+  var y=[]
 
+  //console.log(my_genres)
+  Object.entries(my_genres).forEach(([key,value]) => {
+    
+    if (value!=0){
+      console.log(value)
+      x.push(value)
+      y.push(key)
+    }
+  })
+  console.log(x)
+  console.log(y)
+
+
+
+  var traceA = {
+    type: "pie",
+    values: x,
+    labels: y,
+    hole: 0.25,
+    pull: [0, 0, 0, 0, 0,0.2,0,0],
+    direction: 'clockwise',
+    marker: {
+      //colors: ['#CDDC39', '#673AB7', '#F44336', '#00BCD4', '#607D8B'],
+      line: {
+        color: 'black',
+        width: 0
+      }
+    },
+    textfont: {
+      family: 'Lato',
+      color: 'white',
+      size: 18
+    },
+    hoverlabel: {
+      bgcolor: 'black',
+      bordercolor: 'black',
+      font: {
+        family: 'Lato',
+        color: 'white',
+        size: 18
+      }
+    }
+  };
+
+  var data = [traceA];
+
+  var layout = {
+    title: "Area Under Forest for Different Countries"
+  };
+
+  Plotly.plot(pieDiv, data, layout);
+
+}
 
 //MAIN-----------------------------------------------------------------------------------------
 
@@ -132,8 +189,21 @@ function new_select(){
             if (key=='genre'){
               temp_value=""
               temp_count=0
+              contain_streaming_service=false
               value.split("|").forEach((item)=> {
-                if(temp_count==1) categorize(item)
+                if(temp_count==1) {
+                  if (item==" Disney+" || item==" HBO" || item==" Netflix" || item==" Hulu"){contain_streaming_service=true}
+                  else {
+                    //console.log("1: "+item)
+                    categorize(item)
+                  }
+                }
+
+                if(temp_count==2 && contain_streaming_service==true){
+                  //console.log("2: "+item)
+                  categorize(item)
+                }
+
                 if (!list_genre.includes(item)){list_genre.push(item)}
                 if(temp_count>1){
                   temp_value=temp_value+", "}
@@ -153,6 +223,7 @@ function new_select(){
       } 
     }))
     //console.log(list_genre)
+    pieChart(genre_list_org);
   })
 }
 //initiate on load
@@ -161,7 +232,10 @@ function new_select(){
 //  d3.select('#genre').append("option").text(item).property("value",item)
 //})
 createBar();
+pieChart(genre_list_org);
+
 //categorize('adfafa');
 //categorize('Science Fiction');
-console.log(genre_list_org)
+//console.log(genre_list_org)
+
 new_select();
