@@ -87,6 +87,8 @@ function createBar(){
           t: 30,
           pad: 4
       },
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
       xanchor: 'left',
       display:'none'
   }
@@ -144,7 +146,9 @@ function pieChart(my_genres){
   var data = [traceA];
 
   var layout = {
-    title: "Area Under Forest for Different Countries"
+    title: "Area Under Forest for Different Countries",
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)'
   };
 
   Plotly.plot(pieDiv, data, layout);
