@@ -103,13 +103,12 @@ function pieChart(my_genres){
   Object.entries(my_genres).forEach(([key,value]) => {
     
     if (value!=0){
-      console.log(value)
+
       x.push(value)
       y.push(key)
     }
   })
-  console.log(x)
-  console.log(y)
+
 
 
 
@@ -183,15 +182,10 @@ var thead=d3.select("thead");
 var tbody=d3.select("tbody");
 
 
-//Append header column names for Table
-//var columnNames=['Title', 'Category', 'Production Country', 'Premiere','Genres:','Views'];
-//var row = thead.append("tr");
-//columnNames.forEach(columnName => row.append("th").text(columnName));
 
 function new_select(){
   d3.select("tbody").html("")
-  //tbody.html(""); 
-  //populate table on load
+
 
   row_count=0
   var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
@@ -245,15 +239,28 @@ function new_select(){
     }))
     //console.log(list_genre)
     pieChart(genre_list_org);
+    getGenderData()
   })
 }
-//initiate on load
-//d3.select('#genre').append("option").text('All').property("value",'All')
-//genre_list.forEach(item=>{
-//  d3.select('#genre').append("option").text(item).property("value",item)
-//})
+
+function getGenderData(){
+
+  //d3.select("tbody").html("")
+  console.log('hi')
+  //var url_gender = `/api/gender?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
+  var url_gender = `/api/gender?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
+  console.log('maybe')
+  d3.json(url_gender).then(function (responseG) {
+    console.log('bye')
+    console.log(responseG)
+
+  })
+
+}
+
+
 createBar();
-pieChart(genre_list_org);
+
 
 //categorize('adfafa');
 //categorize('Science Fiction');

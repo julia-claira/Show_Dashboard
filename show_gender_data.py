@@ -3,17 +3,17 @@ import sqlite3
 
 #function does an sql query by gender
 def return_gender_table(region,generation,category,gender):
+    
     #set up sqlite
-    
-    
-    
+    connection = sqlite3.connect('flix.db')
+
     #assemble query
 
     if region=='all' or generation=='all':
-        sql_query=f"select title, sum(cast(replace(view,',','') as integer)) as views, genre \
+        sql_query=f"select gender,title, sum(cast(replace(view,',','') as integer)) as views, genre \
         from flix_shows where gender='{gender}'"
     else:
-         sql_query=f"select title,cast(replace(view,',','') as integer) as views, genre \
+         sql_query=f"select gender,title,cast(replace(view,',','') as integer) as views, genre \
          from flix_shows where gender='{gender}'"
         
     if region!='all': 
@@ -35,14 +35,14 @@ def return_gender_table(region,generation,category,gender):
     return df 
 
 #function sorts genre into main and subcategory
-def sort_gender_table():  
+def sort_gender_table(df2):  
 
     genre_main=[]
     genre_sub=[]
 
 
-    for row in df.itertuples():
-        cat=str(row[3]).split('|')
+    for row in df2.itertuples():
+        cat=str(row[4]).split('|')
         genre_sub_temp=""
         if (len(cat)>1):
             if(cat[1]==' Netflix' or cat[1]==' Disney+' or cat[1]==' Hulu' or cat[1]==' HBO Max' \
@@ -64,19 +64,26 @@ def sort_gender_table():
             genre_main.append("")
         genre_sub.append(genre_sub_temp)
 
-    df['genre_main']=genre_main
-    df['genre_sub']=genre_sub
+    df2['genre_main']=genre_main
+    df2['genre_sub']=genre_sub
     
-    return df 
+    return df2 
 
 #main function
 def get_gender_data(region,generation,category):
+
+    
     df=return_gender_table(region,generation,category,'men')
-    sort_gender_table()
-    men_df=df[['title','views','genre_main','genre_sub']] 
+    df3=sort_gender_table(df)
+    men_df=df3[['gender','title','views','genre_main','genre_sub']] 
 
     df=return_gender_table(region,generation,category,'women')
-    sort_gender_table()
-    women_df=df[['title','views','genre_main','genre_sub']] 
+    df3=sort_gender_table(df)
+    women_df=df3[['gender','title','views','genre_main','genre_sub']] 
     
-    return [men_df,women_df]
+    #concatinate df
+    m_w_concat_df=pd.concat([men_df, women_df], axis=0).reset_index()
+    m_w_concat_df.drop(['index'], axis = 1, inplace = True) 
+    m_w_concat_df
+    
+    return  m_w_concat_df
