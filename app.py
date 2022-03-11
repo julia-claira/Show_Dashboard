@@ -13,6 +13,7 @@ import pandas as pd
 
 # import function
 from .show_data import return_table
+from .show_gender_data import get_gender_data
 
 
 # In[3]:
@@ -33,12 +34,6 @@ hello_dict={"Hello":"World"}
 @app.route("/")
 def home():
     return render_template("index.html")
-    #a={"Table":[5,2,6],"Test":['candy','toys','tacos']}
-    #return "4"
-    #return return_table().to_json(orient="table")
-
-
-# In[6]:
 
 
 # Create api route for ml data by REGION
@@ -49,11 +44,19 @@ def apiml():
     gender = request.args.get("gender", type=str)
     generation = request.args.get("generation", type=str)
     category = request.args.get("category", type=str)
-    #return ('cooco')
+
     return return_table(region,gender,generation,category).to_json(orient='records')
 
 
-# In[12]:
+# Create api route for data by gender
+@app.route("/api/gender", methods=["GET"])
+def apigender():
+      
+    region = request.args.get("region", type=str)
+    generation = request.args.get("generation", type=str)
+    category = request.args.get("category", type=str)
+    
+    return return_table(region,generation,category).to_json(orient='records')
 
 
 @app.route("/jsonify")

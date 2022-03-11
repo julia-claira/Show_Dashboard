@@ -70,12 +70,12 @@ def sort_gender_table():
     return df 
 
 #main function
-def get_gender_data():
-    df=return_gender_table('all','all','all','men')
+def get_gender_data(region,generation,category):
+    df=return_gender_table(region,generation,category,'men')
     sort_gender_table()
     men_df=df[['title','views','genre_main','genre_sub']] 
 
-    df=return_gender_table('all','all','all','women')
+    df=return_gender_table(region,generation,category,'women')
     sort_gender_table()
     women_df=df[['title','views','genre_main','genre_sub']] 
     
