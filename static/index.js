@@ -12,6 +12,12 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
 
 genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
 'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
+
+men_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
+'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
+
+women_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
+'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 //var resetButton = d3.select("#reset");//resets filter
 //resetButton.on("click",resetTable);
 
@@ -94,13 +100,49 @@ function createBar(){
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 };
-function pieChart(my_genres){
+function pieChart(gender_df){
   var pieDiv = document.getElementById("pie-chart");
   var x=[]
   var y=[]
 
-  //console.log(my_genres)
-  Object.entries(my_genres).forEach(([key,value]) => {
+  the_gender='women'
+  gender_trigger=0
+  current_genre=""
+ 
+  gender_df.forEach((shows) => {
+    Object.entries(shows).forEach(([key,value]) => {
+      if (key=="gender"){
+        if(value==the_gender){
+          
+          gender_trigger=1
+        }
+        else{
+          
+          gender_trigger=0
+        }
+      } 
+
+      //console.log(count)
+      if (key=="genre_main"){
+        //console.log('hit1')
+        current_genre=value;
+      }
+      if (key=="views" && gender_trigger==1){
+        console.log('hit2')
+        console.log(current_genre)
+        console.log(value/1000)
+        //I need to sort out if it is man or woman first
+
+        women_genre_list_org[current_genre]=women_genre_list_org[current_genre]+value/1000;
+        //then need to create a list or dictonary for genre_sub
+        //delete categorize function and remove the categorizing in new_select()
+        //I actually will want to put this in a separate function so I don't have to create the pie chart twice(or create a loop 2x)
+      }
+    })
+  })
+  console.log( women_genre_list_org)
+  //my_genres//this will be the thing to pass in the nextlne
+  Object.entries(women_genre_list_org).forEach(([key,value]) => {
     
     if (value!=0){
 
@@ -238,22 +280,20 @@ function new_select(){
       } 
     }))
     //console.log(list_genre)
-    pieChart(genre_list_org);
+    //pieChart(genre_list_org);
     getGenderData()
   })
 }
 
 function getGenderData(){
 
-  //d3.select("tbody").html("")
-  console.log('hi')
-  //var url_gender = `/api/gender?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
-  var url_gender = `/api/gender?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
-  console.log('maybe')
-  d3.json(url_gender).then(function (responseG) {
-    console.log('bye')
-    console.log(responseG)
 
+  var url_gender = `/api/gender?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
+  
+  d3.json(url_gender).then(function (responseG) {
+    
+    console.log(responseG)
+    pieChart(responseG);
   })
 
 }

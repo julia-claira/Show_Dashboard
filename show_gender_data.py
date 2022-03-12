@@ -79,7 +79,7 @@ def get_gender_data(region,generation,category):
 
     df=return_gender_table(region,generation,category,'women')
     df3=sort_gender_table(df)
-    women_df=df3[['gender','title','views','genre_main','genre_sub']] 
+    women_df=df3[['gender','title','genre_main','genre_sub','views']] 
     
     #concatinate df
     m_w_concat_df=pd.concat([men_df, women_df], axis=0).reset_index()
