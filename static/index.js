@@ -13,11 +13,7 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
 genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
 'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 
-men_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
-'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 
-women_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
-'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 //var resetButton = d3.select("#reset");//resets filter
 //resetButton.on("click",resetTable);
 
@@ -100,10 +96,13 @@ function createBar(){
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 };
-function pieChart(gender_df){
-  var pieDiv = document.getElementById("pie-chart");
-  var x=[]
-  var y=[]
+function pie_categorize(gender_df){
+
+  men_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,
+'Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
+
+  women_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,
+  'Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 
   the_gender='women'
   gender_trigger=0
@@ -116,45 +115,64 @@ function pieChart(gender_df){
           
           gender_trigger=1
         }
-        else{
-          
+        else{          
           gender_trigger=0
         }
       } 
-
-      //console.log(count)
       if (key=="genre_main"){
-        //console.log('hit1')
         current_genre=value;
       }
       if (key=="views" && gender_trigger==1){
-        console.log('hit2')
-        console.log(current_genre)
-        console.log(value/1000)
-        //I need to sort out if it is man or woman first
-
-        women_genre_list_org[current_genre]=women_genre_list_org[current_genre]+value/1000;
-        //then need to create a list or dictonary for genre_sub
-        //delete categorize function and remove the categorizing in new_select()
-        //I actually will want to put this in a separate function so I don't have to create the pie chart twice(or create a loop 2x)
+        if(women_genre_list_org[current_genre]!=undefined){
+          women_genre_list_org[current_genre]=women_genre_list_org[current_genre]+value/1000;
+        }
+        else {
+          women_genre_list_org['Other']=women_genre_list_org['Other']+value/1000;
+        }
+        
+      }
+      else if (key=="views" && gender_trigger==0){
+        if(men_genre_list_org[current_genre]!=undefined){
+          men_genre_list_org[current_genre]=men_genre_list_org[current_genre]+value/1000;
+        }
+        else {
+          men_genre_list_org['Other']=men_genre_list_org['Other']+value/1000;
+        }
       }
     })
   })
-  console.log( women_genre_list_org)
+  //console.log(women_genre_list_org)
+  pieChart(women_genre_list_org,men_genre_list_org)
+  //pieChart('men',men_genre_list_org)
   //my_genres//this will be the thing to pass in the nextlne
-  Object.entries(women_genre_list_org).forEach(([key,value]) => {
-    
-    if (value!=0){
 
+}
+
+
+function pieChart(women_the_genre_list,men_the_genre_list){
+  
+
+  var x=[]
+  var y=[]
+  var x2=[]
+  var y2=[]
+
+  Object.entries(women_the_genre_list).forEach(([key,value]) => {   
+    if (value!=0){
       x.push(value)
       y.push(key)
     }
   })
 
+  Object.entries(men_the_genre_list).forEach(([key,value]) => {   
+    if (value!=0){
+      x2.push(value)
+      y2.push(key)
+    }
+  })
 
-
-
-  var traceA = {
+  var Women = {
+    domain: {column: 0},
     type: "pie",
     values: x,
     labels: y,
@@ -184,23 +202,29 @@ function pieChart(gender_df){
     }
   };
 
-  var data = [traceA];
-
-  var layout = {
-    title: {
-      text:"Genre Preference",
-      font: {
-        family: 'Lato',
-        color: 'white',
-        size: 20
+  var Men = {
+    domain: {column: 1},
+    type: "pie",
+    values: x2,
+    labels: y2,
+    hole: 0.5,
+    pull: [0, 0, 0, 0, 0,0.2,0,0],
+    direction: 'clockwise',
+    marker: {
+      //colors: ['#CDDC39', '#673AB7', '#F44336', '#00BCD4', '#607D8B'],
+      line: {
+        color: 'black',
+        width: 0
       }
     },
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    legend: {
-      x: 1,
-      xanchor: 'right',
-      y: 1,
+    textfont: {
+      family: 'Lato',
+      color: 'white',
+      size: 18
+    },
+    hoverlabel: {
+      bgcolor: 'black',
+      bordercolor: 'black',
       font: {
         family: 'Lato',
         color: 'white',
@@ -209,7 +233,69 @@ function pieChart(gender_df){
     }
   };
 
-  Plotly.plot(pieDiv, data, layout);
+  var data = [Women,Men];
+
+  var layout = {
+    title: {
+      x:.2,
+      y:.99,
+      text:'Genre Preference by Gender',
+      font: {
+      color:'white',
+      size:24},
+    },
+    annotations: [
+      {
+        font: {
+          size: 20
+        },
+        showarrow: false,
+        text: 'Women',
+        x: 0.175,
+        y: 0.5,
+        font: {
+          color:'white',
+          size:22}
+      },
+      {
+        font: {
+          size: 20
+        },
+        showarrow: false,
+        text: 'Men',
+        x: 0.8,
+        y: 0.5,
+        font: {
+          color:'white',
+          size:22}
+      }
+    ],
+    showlegend: true,
+    autosize: false,
+    width: 700,
+  height: 520,
+    margin: {
+      l: 10,
+      r: 10,
+      b: 10,
+      t: 120,
+      pad: 0
+    },
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: 'rgba(0,0,0,0)',
+    legend: {
+      orientation: "h",
+      font: {
+        family: 'Lato',
+        color: 'white',
+        size: 18
+      }
+    },
+    grid: {rows: 1, columns: 2}
+  };
+
+  
+  Plotly.newPlot("f-pie-chart", data, layout);
 
 }
 
@@ -252,13 +338,13 @@ function new_select(){
                   if (item==" Disney+" || item==" HBO" || item==" Netflix" || item==" Hulu"){contain_streaming_service=true}
                   else {
                     //console.log("1: "+item)
-                    categorize(item)
+                    //categorize(item)
                   }
                 }
 
                 if(temp_count==2 && contain_streaming_service==true){
                   //console.log("2: "+item)
-                  categorize(item)
+                  //categorize(item)
                 }
 
                 if (!list_genre.includes(item)){list_genre.push(item)}
@@ -292,8 +378,8 @@ function getGenderData(){
   
   d3.json(url_gender).then(function (responseG) {
     
-    console.log(responseG)
-    pieChart(responseG);
+    //console.log(responseG)
+    pie_categorize(responseG);
   })
 
 }
