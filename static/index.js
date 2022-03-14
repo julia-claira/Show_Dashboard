@@ -51,15 +51,61 @@ function categorize(the_value){
 
 }
 
-function createBar(){
-    
-  //Adds line breaks instead of semicolons for hover text
-  //var theLabel=dataTopTen.map(row=> {
-  //    return row.label.split(';');
-  //})
-  //theLabel=theLabel.map(row =>row.join('<br>'));
-  //theLabel.reverse();
+function createBar(gender_df){
+  
+  var f_new_sub={};
+  var m_new_sub={};
+  var isSciFi=false
+  var the_gender="women"
 
+  gender_df.forEach((shows) => {
+    Object.entries(shows).forEach(([key,value]) => {
+      if(key=="gender"){
+        if(value=="women"){
+          the_gender="women"
+        }
+        else{
+          the_gender="men"
+        }      
+      }
+      
+      if(key=="genre_main"){
+        if(value=="Science Fiction"){
+          isSciFi=true
+        }
+        else{
+          isSciFi=false
+        }
+      }
+      if(key=="genre_sub" && isSciFi){
+        sub_cat=value
+        if(the_gender=="women"){
+          if (!(value in f_new_sub)){
+            temp_sub={[value]:0}
+            f_new_sub=Object.assign(temp_sub,f_new_sub)
+          }
+        }
+        else{
+          if (!(value in m_new_sub)){
+            temp_sub={[value]:0}
+            m_new_sub=Object.assign(temp_sub,m_new_sub)
+          }
+        }
+      }
+      if(key=="views" && isSciFi){
+        if(the_gender=="women"){
+          f_new_sub[sub_cat]=f_new_sub[sub_cat]+value/1000
+        }
+        else{
+          m_new_sub[sub_cat]=m_new_sub[sub_cat]+value/1000
+        }
+      }
+    })
+  })
+  console.log(f_new_sub)
+  console.log(m_new_sub)
+  //sort sub array and then chart top 5 subcategories!!!!!!!!!!!!!!!!
+  
   //Creates Trace
   var trace1 = {
       type: 'bar',
@@ -99,7 +145,7 @@ function createBar(){
 function pie_categorize(gender_df){
 
   men_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,
-'Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
+  'Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 
   women_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,
   'Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
@@ -141,10 +187,8 @@ function pie_categorize(gender_df){
       }
     })
   })
-  //console.log(women_genre_list_org)
+  
   pieChart(women_genre_list_org,men_genre_list_org)
-  //pieChart('men',men_genre_list_org)
-  //my_genres//this will be the thing to pass in the nextlne
 
 }
 
@@ -273,7 +317,7 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     showlegend: true,
     autosize: false,
     width: 700,
-  height: 520,
+    height: 520,
     margin: {
       l: 10,
       r: 10,
@@ -380,12 +424,13 @@ function getGenderData(){
     
     //console.log(responseG)
     pie_categorize(responseG);
+    createBar(responseG);
   })
 
 }
 
 
-createBar();
+
 
 
 //categorize('adfafa');
