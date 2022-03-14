@@ -105,42 +105,126 @@ function createBar(gender_df){
   console.log(f_new_sub)
   console.log(m_new_sub)
   //sort sub array and then chart top 5 subcategories!!!!!!!!!!!!!!!!
-  
+  x1=[]
+  y1=[]
+  Object.entries(f_new_sub).forEach(([key,value])=>{
+    x1.push(key)
+    y1.push(value)
+  })
+
+  x2=[]
+  y2=[]
+  Object.entries(m_new_sub).forEach(([key,value])=>{
+    x2.push(key)
+    y2.push(value)
+  })
+
   //Creates Trace
   var trace1 = {
       type: 'bar',
-      x: [1,2,3,4,5,6,7,8,9,10],
-      y: [1,2,3,4,5,6,7,8,9,10],
+      x: x1,
+      y: y1,
       text: 'bar',
       hovertemplate: 
       '<b>%{x}<b>'+
       '<br>-------<br>'+
       '<i>%{text}</i>'+
       '<extra></extra>',
-      orientation: 'h',
+      orientation: 'v',
   };
-  var myData=[trace1];
+  var trace2 = {
+    type: 'bar',
+    x: x2,
+    y: y2,
+    xaxis: 'x2',
+    yaxis: 'y2',
+    text: 'bar',
+    hovertemplate: 
+    '<b>%{x}<b>'+
+    '<br>-------<br>'+
+    '<i>%{text}</i>'+
+    '<extra></extra>',
+    orientation: 'v',
+};
+  var myData=[trace1,trace2];
 
   //Layout and Plot
   layout = {
       title: {text:"Top Ten Bacteria Cultures Found",xanchor:'right'},
       title_x: 0,
+      annotations: [
+        {
+          font: {
+            size: 20
+          },
+          showarrow: false,
+          text: 'Women',
+          x: 0.175,
+          y: 0.5,
+          font: {
+            color:'white',
+            size:22}
+        },
+        {
+          font: {
+            size: 20
+          },
+          showarrow: false,
+          text: 'Men',
+          x: 0.8,
+          y: 0.5,
+          font: {
+            color:'white',
+            size:22}
+        }
+      ],
+      showlegend: true,
       autosize: false,
-      width: 600,
-      height: 500,
+      width: 700,
+      height: 520,
       margin: {
-          l: 70,
-          r: 200,
-          b: 100,
-          t: 30,
-          pad: 4
+        l: 10,
+        r: 10,
+        b: 10,
+        t: 120,
+        pad: 0
       },
-      paper_bgcolor: 'rgba(0,0,0,0)',
-      plot_bgcolor: 'rgba(0,0,0,0)',
+      //paper_bgcolor: 'rgba(0,0,0,0)',
+      //plot_bgcolor: 'rgba(0,0,0,0)',
       xanchor: 'left',
-      display:'none'
+      display:'none',
+      grid: {rows: 1, columns: 2, pattern: 'independent'}
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
+
+  //@$%@#%#@%$#@%@#%@%$#@%@#5
+
+  var trace1 = {
+    x: [1, 2, 3],
+    y: [4, 5, 6],
+    type: 'bar'
+  };
+  
+  var trace2 = {
+    x: [20, 30, 40],
+    y: [50, 60, 70],
+    xaxis: 'x2',
+    yaxis: 'y2',
+    type: 'bar'
+  };
+  
+  var data = [trace1, trace2];
+  
+  var layout = {
+    xaxis: {domain: [0, 0.7]},
+    yaxis2: {anchor: 'x2'},
+    xaxis2: {domain: [0.8, 1]}
+  };
+  
+  //Plotly.newPlot('bar', data, layout);
+
+
+  //42353535353634431454@#%@^#&&
 };
 function pie_categorize(gender_df){
 
@@ -335,7 +419,8 @@ function pieChart(women_the_genre_list,men_the_genre_list){
         size: 18
       }
     },
-    grid: {rows: 1, columns: 2}
+    grid: {rows: 1, columns: 2},
+    display:'none'
   };
 
   
