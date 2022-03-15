@@ -36,20 +36,29 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-function categorize(the_value){
-  //console.log(genre_list_org['Science Fiction'])
-  //genre_list_org['Science Fiction']=genre_list_org['Science Fiction']+1
-  if(genre_list_org[the_value]!=undefined){
-    genre_list_org[the_value]=genre_list_org[the_value]+1  
+function categorize(temp_labels,numbersA){
+    
+  var temp_numbers=[]
+  var labelsB=[]
+
+    for (a of numbersA) temp_numbers.push(a);
+
+    numbersA.sort( function( a , b){
+      console.log('----')
+      if(a < b) return 1;
+      if(a > b) return -1;
+      return 0;
+  });
+  for (i = 0; i < numbersA.length; i++){
+    labelsB.push(temp_labels[temp_numbers.indexOf(numbersA[i])])
   }
-  else {
-    genre_list_org['Other']=genre_list_org['Other']+1 
-  }
-
-
-
-
+  return labelsB
 }
+
+
+
+
+
 
 function createBar(gender_df){
   
@@ -111,13 +120,28 @@ function createBar(gender_df){
     x1.push(key)
     y1.push(value)
   })
-
+  
+  x1=categorize(x1,y1)
+  while (x1.length>=6){
+    x1.pop()
+    y1.pop()
+  }
+  
   x2=[]
   y2=[]
   Object.entries(m_new_sub).forEach(([key,value])=>{
     x2.push(key)
     y2.push(value)
   })
+
+  x2=categorize(x2,y2)
+  while (x2.length>=6){
+    x2.pop()
+    y2.pop()
+  }
+
+  console.log(x2)
+
 
   //Creates Trace
   var trace1 = {
@@ -183,11 +207,11 @@ function createBar(gender_df){
       width: 700,
       height: 520,
       margin: {
-        l: 10,
-        r: 10,
-        b: 10,
-        t: 120,
-        pad: 0
+        l: 30,
+        r: 30,
+        b: 30,
+        t: 30,
+        pad: 2
       },
       //paper_bgcolor: 'rgba(0,0,0,0)',
       //plot_bgcolor: 'rgba(0,0,0,0)',
