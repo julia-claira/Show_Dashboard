@@ -26,8 +26,6 @@ categoryField.on("change", new_select);
 var countryField= d3.select("#country");//filter for country
 countryField.on("change", new_select);
 
-var genderField= d3.select("#gender");//filter for state
-genderField.on("change", new_select);
 
 var generationField= d3.select("#generation");//filter for city
 generationField.on("change", new_select);
@@ -95,8 +93,8 @@ function createBar(gender_df){
           }
         }
         else{
-          if (!(value in m_new_sub)){
-            temp_sub={[value]:0}
+          if (!('*'+value in m_new_sub)){
+            temp_sub={['*'+value]:0}
             m_new_sub=Object.assign(temp_sub,m_new_sub)
           }
         }
@@ -106,7 +104,7 @@ function createBar(gender_df){
           f_new_sub[sub_cat]=f_new_sub[sub_cat]+value/1000
         }
         else{
-          m_new_sub[sub_cat]=m_new_sub[sub_cat]+value/1000
+          m_new_sub['*'+sub_cat]=m_new_sub['*'+sub_cat]+value/1000
         }
       }
     })
@@ -141,13 +139,17 @@ function createBar(gender_df){
   }
 
   console.log(x2)
+  x3=x1.concat(x2)
+  y3=y1.concat(y2)
+
+  console.log(x3)
 
 
   //Creates Trace
   var trace1 = {
       type: 'bar',
-      x: x1,
-      y: y1,
+      x: x3,
+      y: y3,
       text: 'bar',
       hovertemplate: 
       '<b>%{x}<b>'+
@@ -155,27 +157,29 @@ function createBar(gender_df){
       '<i>%{text}</i>'+
       '<extra></extra>',
       orientation: 'v',
+      textfont: {
+        family: 'Lato',
+        color: 'white',
+        size: 18
+      },
+      marker: {
+        color: ['orange','orange','orange','orange','orange',
+        'rgb(142,124,195)','rgb(142,124,195)','rgb(142,124,195)','rgb(142,124,195)','rgb(142,124,195)']
+      }
   };
-  var trace2 = {
-    type: 'bar',
-    x: x2,
-    y: y2,
-    xaxis: 'x2',
-    yaxis: 'y2',
-    text: 'bar',
-    hovertemplate: 
-    '<b>%{x}<b>'+
-    '<br>-------<br>'+
-    '<i>%{text}</i>'+
-    '<extra></extra>',
-    orientation: 'v',
-};
-  var myData=[trace1,trace2];
+  
+  var myData=[trace1];
 
   //Layout and Plot
   layout = {
-      title: {text:"Top Ten Bacteria Cultures Found",xanchor:'right'},
-      title_x: 0,
+      title: {text:"Science Fiction Sub-Genre Preference",
+      x:0.09,
+      y:.99,
+      font: {
+        color:'white',
+        size:24},
+    },
+      //title_x: 0,
       annotations: [
         {
           font: {
@@ -183,73 +187,62 @@ function createBar(gender_df){
           },
           showarrow: false,
           text: 'Women',
-          x: 0.175,
-          y: 0.5,
+          x: 1.48,
+          y: y3[0]/1.1,
           font: {
             color:'white',
             size:22}
         },
         {
           font: {
-            size: 20
+            size: 20,
+            color:'white'
           },
           showarrow: false,
           text: 'Men',
-          x: 0.8,
-          y: 0.5,
+          x: 6.1,
+          y: y3[0]/1.1,
           font: {
             color:'white',
             size:22}
         }
       ],
-      showlegend: true,
+      showlegend: false,
       autosize: false,
       width: 700,
       height: 520,
       margin: {
-        l: 30,
-        r: 30,
-        b: 30,
-        t: 30,
-        pad: 2
+        l: 45,
+        r: 150,
+        b: 80,
+        t: 120,
+        pad: 0
       },
-      //paper_bgcolor: 'rgba(0,0,0,0)',
-      //plot_bgcolor: 'rgba(0,0,0,0)',
+      xaxis: {
+        tickfont: {
+          family: 'Lato',
+          size: 14,
+          color: 'white'
+        },
+      },
+      yaxis: {
+        tickfont: {
+          family: 'Lato',
+          size: 14,
+          color: 'white'
+        },
+      },
+      paper_bgcolor: 'rgba(0,0,0,0)',
+      plot_bgcolor: 'rgba(0,0,0,0)',
       xanchor: 'left',
       display:'none',
-      grid: {rows: 1, columns: 2, pattern: 'independent'}
+      //grid: {rows: 1, columns: 2, pattern: 'independent'}
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 
-  //@$%@#%#@%$#@%@#%@%$#@%@#5
 
-  var trace1 = {
-    x: [1, 2, 3],
-    y: [4, 5, 6],
-    type: 'bar'
-  };
+}
   
-  var trace2 = {
-    x: [20, 30, 40],
-    y: [50, 60, 70],
-    xaxis: 'x2',
-    yaxis: 'y2',
-    type: 'bar'
-  };
-  
-  var data = [trace1, trace2];
-  
-  var layout = {
-    xaxis: {domain: [0, 0.7]},
-    yaxis2: {anchor: 'x2'},
-    xaxis2: {domain: [0.8, 1]}
-  };
-  
-  //Plotly.newPlot('bar', data, layout);
-
-
-  //42353535353634431454@#%@^#&&
-};
 function pie_categorize(gender_df){
 
   men_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,
@@ -363,7 +356,6 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     pull: [0, 0, 0, 0, 0,0.2,0,0],
     direction: 'clockwise',
     marker: {
-      //colors: ['#CDDC39', '#673AB7', '#F44336', '#00BCD4', '#607D8B'],
       line: {
         color: 'black',
         width: 0
@@ -469,7 +461,7 @@ function new_select(){
 
 
   row_count=0
-  var url = `/api/region?region=${countryField.property("value")}&gender=${genderField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
+  var url = `/api/region?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
     list_genre=[]
     response.forEach((shows => {

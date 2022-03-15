@@ -194,7 +194,7 @@ select {
   }
 
   .pre-scrollable {
-    max-height: 340px;
+    max-height: 440px;
     overflow-y: scroll;
 }
 
