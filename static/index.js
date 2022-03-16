@@ -59,58 +59,37 @@ function categorize(temp_labels,numbersA){
 
 
 function createBar(gender_df){
+
+  var men_titles=[]
+  var women_titles=[]
   
   var f_new_sub={};
   var m_new_sub={};
-  var isSciFi=false
-  var the_gender="women"
 
   gender_df.forEach((shows) => {
-    Object.entries(shows).forEach(([key,value]) => {
-      if(key=="gender"){
-        if(value=="women"){
-          the_gender="women"
+    
+    if (shows['genre_main']=='Science Fiction'){
+      if(shows['gender']=='women'){
+        women_titles.push(shows['title'])
+        
+        if (!(shows['genre_sub'] in f_new_sub)){
+          temp_sub={[shows['genre_sub']]:0}
+          f_new_sub=Object.assign(temp_sub,f_new_sub)
         }
-        else{
-          the_gender="men"
-        }      
+        f_new_sub[shows['genre_sub']]=f_new_sub[shows['genre_sub']]+shows['views']/1000
       }
-      
-      if(key=="genre_main"){
-        if(value=="Science Fiction"){
-          isSciFi=true
+      else{
+        men_titles.push(shows['title'])
+
+        if (!('*'+shows['genre_sub'] in m_new_sub)){
+          temp_sub={['*'+shows['genre_sub']]:0}
+          m_new_sub=Object.assign(temp_sub,m_new_sub)
         }
-        else{
-          isSciFi=false
-        }
+        m_new_sub['*'+shows['genre_sub']]=m_new_sub['*'+shows['genre_sub']]+shows['views']/1000
       }
-      if(key=="genre_sub" && isSciFi){
-        sub_cat=value
-        if(the_gender=="women"){
-          if (!(value in f_new_sub)){
-            temp_sub={[value]:0}
-            f_new_sub=Object.assign(temp_sub,f_new_sub)
-          }
-        }
-        else{
-          if (!('*'+value in m_new_sub)){
-            temp_sub={['*'+value]:0}
-            m_new_sub=Object.assign(temp_sub,m_new_sub)
-          }
-        }
-      }
-      if(key=="views" && isSciFi){
-        if(the_gender=="women"){
-          f_new_sub[sub_cat]=f_new_sub[sub_cat]+value/1000
-        }
-        else{
-          m_new_sub['*'+sub_cat]=m_new_sub['*'+sub_cat]+value/1000
-        }
-      }
-    })
+    }
   })
-  console.log(f_new_sub)
-  console.log(m_new_sub)
+
   //sort sub array and then chart top 5 subcategories!!!!!!!!!!!!!!!!
   x1=[]
   y1=[]
@@ -254,39 +233,26 @@ function pie_categorize(gender_df){
   the_gender='women'
   gender_trigger=0
   current_genre=""
+  console.log(gender_df)
  
   gender_df.forEach((shows) => {
-    Object.entries(shows).forEach(([key,value]) => {
-      if (key=="gender"){
-        if(value==the_gender){
-          
-          gender_trigger=1
-        }
-        else{          
-          gender_trigger=0
-        }
+
+    if(shows['gender']=='women'){    
+      if(women_genre_list_org[shows['genre_main']]!=undefined){
+        women_genre_list_org[shows['genre_main']]=women_genre_list_org[shows['genre_main']]+shows['views']/1000;
+      }
+      else {
+        women_genre_list_org['Other']=women_genre_list_org['Other']+shows['views']/1000;
       } 
-      if (key=="genre_main"){
-        current_genre=value;
+    }
+    else{
+      if(men_genre_list_org[shows['genre_main']]!=undefined){
+        men_genre_list_org[shows['genre_main']]=men_genre_list_org[shows['genre_main']]+shows['views']/1000;
       }
-      if (key=="views" && gender_trigger==1){
-        if(women_genre_list_org[current_genre]!=undefined){
-          women_genre_list_org[current_genre]=women_genre_list_org[current_genre]+value/1000;
-        }
-        else {
-          women_genre_list_org['Other']=women_genre_list_org['Other']+value/1000;
-        }
-        
-      }
-      else if (key=="views" && gender_trigger==0){
-        if(men_genre_list_org[current_genre]!=undefined){
-          men_genre_list_org[current_genre]=men_genre_list_org[current_genre]+value/1000;
-        }
-        else {
-          men_genre_list_org['Other']=men_genre_list_org['Other']+value/1000;
-        }
-      }
-    })
+      else {
+        men_genre_list_org['Other']=men_genre_list_org['Other']+shows['views']/1000;
+      } 
+    }
   })
   
   pieChart(women_genre_list_org,men_genre_list_org)
@@ -295,7 +261,7 @@ function pie_categorize(gender_df){
 
 
 function pieChart(women_the_genre_list,men_the_genre_list){
-  
+
 
   var x=[]
   var y=[]
@@ -483,7 +449,7 @@ function new_select(){
                   if (item==" Disney+" || item==" HBO" || item==" Netflix" || item==" Hulu"){contain_streaming_service=true}
                   else {
                     //console.log("1: "+item)
-                    //categorize(item)
+                    //if(item=="Science Ficcategorize(item)
                   }
                 }
 
