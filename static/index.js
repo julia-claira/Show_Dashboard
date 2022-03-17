@@ -58,8 +58,8 @@ function categorize(temp_labels,numbersA){
 
 
 
-function createBar(gender_df){
-
+function createBar(gender_df,ranking){
+  console.log(ranking)
   var men_titles=[]
   var women_titles=[]
   
@@ -219,6 +219,7 @@ function createBar(gender_df){
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 
+  return [women_titles,men_titles];
 
 }
   
@@ -430,15 +431,18 @@ function new_select(){
   var url = `/api/region?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
     list_genre=[]
+    title_rank=[]
+    rank_title=[]
     response.forEach((shows => {
       row_count=row_count+1
       
-      if (row_count<100){
+      if (row_count<300){
         var row =tbody.append("tr")
         row.append("td").text(row_count)
+        rank_title.push(row_count)
         Object.entries(shows).forEach(([key,value]) => {
           
-
+          if (key=='title') title_rank.push(value)
           if (key!='generation' && key!='gender' && key!='viewing_country' && key!='view'){
             if (key=='genre'){
               temp_value=""
@@ -478,11 +482,12 @@ function new_select(){
     }))
     //console.log(list_genre)
     //pieChart(genre_list_org);
-    getGenderData()
+    getGenderData([rank_title,title_rank])
+
   })
 }
 
-function getGenderData(){
+function getGenderData(ranking){
 
 
   var url_gender = `/api/gender?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
@@ -491,9 +496,9 @@ function getGenderData(){
     
     //console.log(responseG)
     pie_categorize(responseG);
-    createBar(responseG);
+    createBar(responseG,ranking);
   })
-
+  
 }
 
 
