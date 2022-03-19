@@ -18,6 +18,18 @@ body {
   overflow: auto;
 }
 
+.highlightedBar {
+  height: 30px;
+}
+
+th {
+  text-align:center;
+}
+
+td {
+  text-align:center;
+}
+
 
 
 /* The footer is positioned at the bottom of the page */
@@ -75,10 +87,6 @@ select {
   outline: none;
 }
 
-#table-area th {
-  text-align: left;
-  font-weight: bold;
-}
 
 #table-area th:first-child,
 #table-area th:nth-child(2),
@@ -178,14 +186,14 @@ select {
 
   #table-area tbody td {
     display: block;
-    text-align: center;
+    text-align: left;
   }
 
   #table-area tbody td::before {
     display: block;
     font-size: 1.4em;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     content: attr(data-th);
   }
 

@@ -221,7 +221,17 @@ function createBar(gender_df,title_rank){
 
   //43243274385347582340857342897985823 Create Rank Chart Here
   console.log(title_rank.indexOf(women_titles[0])+1)
-  console.log(title_rank.indexOf('Bones')+1)
+  for (i=0;i<=4;i++){
+    curr_row=tbody_women.append("tr")
+    curr_row.append("td").text(title_rank.indexOf(women_titles[i])+1)
+    curr_row.append("td").text(women_titles[i])
+  }
+
+  for (i=0;i<=4;i++){
+    curr_row=tbody_men.append("tr")
+    curr_row.append("td").text(title_rank.indexOf(men_titles[i])+1)
+    curr_row.append("td").text(men_titles[i])
+  }
 
 }
   
@@ -421,29 +431,34 @@ var table=d3.select("#ufo-table");
 //use D3 to select table head
 var thead=d3.select("thead");
  //use D3 to select table body
-var tbody=d3.select("tbody");
-
+var tbody=d3.select("#show-table");
+var tbody_women=d3.select("#table_women");
+var tbody_men=d3.select("#table_men");
 
 
 function new_select(){
-  d3.select("tbody").html("")
+  //d3.select("tbody").html("")
 
 
   row_count=0
   var url = `/api/region?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
+    console.log(response)
     list_genre=[]
     title_rank=[]
     response.forEach((shows => {
       row_count=row_count+1
       
       if (row_count<300){
-        var row =tbody.append("tr")
-        row.append("td").text(row_count)
+        if(row_count % 2 != 0){
+          var row=tbody.append("tr").style("background-color",'#515d6b').classed("highlightedBar", true)
+        }
+        else row=tbody.append("tr")
+        row.append("td").text(row_count).classed("highlightedBar", true)
         Object.entries(shows).forEach(([key,value]) => {
           
           if (key=='title') title_rank.push(value)
-          if (key!='generation' && key!='gender' && key!='viewing_country' && key!='view'){
+          if (key!='generation' && key!='gender' && key!='viewing_country' && key!='view' && key!='country'){
             if (key=='genre'){
               temp_value=""
               temp_count=0
@@ -502,11 +517,12 @@ function getGenderData(title_rank){
 }
 
 
-
-
+var the_main_title="Top " + categoryField.property("value")+" in "+countryField.property("value")+" for "+generationField.property("value")
+//d3.select("#main_title").text()
+//"All Genres" "Science Fiction"
 
 //categorize('adfafa');
 //categorize('Science Fiction');
 //console.log(genre_list_org)
-
+d3.select("#main_title").text(the_main_title)
 new_select();
