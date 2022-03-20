@@ -90,7 +90,7 @@ function createBar(gender_df,title_rank){
     }
   })
 
-  //sort sub array and then chart top 5 subcategories!!!!!!!!!!!!!!!!
+  //sort sub array and then chart top 5 subcategories
   x1=[]
   y1=[]
   Object.entries(f_new_sub).forEach(([key,value])=>{
@@ -219,8 +219,9 @@ function createBar(gender_df,title_rank){
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 
-  //43243274385347582340857342897985823 Create Rank Chart Here
-  console.log(title_rank.indexOf(women_titles[0])+1)
+  //Create Rank Chart Here
+  tbody_women.html("")
+  tbody_men.html("")
   for (i=0;i<=4;i++){
     curr_row=tbody_women.append("tr")
     curr_row.append("td").text(title_rank.indexOf(women_titles[i])+1)
@@ -495,8 +496,17 @@ function new_select(){
         })
       } 
     }))
-    //console.log(list_genre)
-    //pieChart(genre_list_org);
+    var mainA=d3.select("#category option:checked").text()
+    var mainB=d3.select("#country option:checked").text()
+    var mainC=d3.select("#generation option:checked").text()
+
+    if (mainA=="All") mainA="Movie and Show"
+    if (mainB=="All") mainB="All Countries"
+    if (mainC=="All") mainC="Every Age"
+    
+    var the_main_title=mainA +" Metrics in "+mainB +" for "+mainC
+    d3.select("#main_title").html("")
+    d3.select("#main_title").text(the_main_title)
     getGenderData(title_rank)
 
   })
@@ -517,12 +527,7 @@ function getGenderData(title_rank){
 }
 
 
-var the_main_title="Top " + categoryField.property("value")+" in "+countryField.property("value")+" for "+generationField.property("value")
-//d3.select("#main_title").text()
-//"All Genres" "Science Fiction"
 
-//categorize('adfafa');
-//categorize('Science Fiction');
-//console.log(genre_list_org)
-d3.select("#main_title").text(the_main_title)
+
+
 new_select();
