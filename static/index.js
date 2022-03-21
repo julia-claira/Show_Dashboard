@@ -1,7 +1,7 @@
 //The Filter Selection Form------------------------------------------------------------------
 
 //User Events
-genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animation','Fantasy','Supernatural','History','Vikings','HBO','Dragons','Netflix',
+var genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animation','Fantasy','Supernatural','History','Vikings','HBO','Dragons','Netflix',
  'Wizards','Superhero','DC','Crime','Case of the week','Science Fiction','Postapocalypse','Mystery','Drama','Gangsters','For Older Kids','Doctors',
  'Drug Cartel','Serial killer','Vampires','Action','Prison','Teens','Politics','Buddies','Horror','Terorrism','Future','Disaster','Business','For babies','Murder',
  'Independent Comics','Journalists','Witch','Cyberpunk','Disney+','Space opera','Space','Music','Time travel','Robots','Animals','Treasure hunt','Princesses',
@@ -10,15 +10,9 @@ genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animatio
  'Cancer','Documentary','Action Crime','Racism','Far East','Weed','Fantasy Adventure','Relationship','Ancient Rome','Thriller','Dramedy','Disapperance',
  'Rom Com','Writers','Body switch','Sex','Geniuses','Conspiracy','Holocaust','Break-up']
 
-genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
+var genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,'Sci-fi drama':0,
 'Animated':0,'Animation':0,'Animated':0,'Adult Animation':0,'Adventure':0,'Other':0,'Fantasy':0,'Fantasy Adventure':0,'Documentary':0,'Superhero':0}
 
-
-//var resetButton = d3.select("#reset");//resets filter
-//resetButton.on("click",resetTable);
-
-//var dateField= d3.select("#date-field");//filter for date
-//dateField.on("change", filteredTable);
 
 var categoryField= d3.select("#category");//filter for shape
 categoryField.on("change", new_select);
@@ -30,10 +24,12 @@ countryField.on("change", new_select);
 var generationField= d3.select("#generation");//filter for city
 generationField.on("change", new_select);
 
+//function adds commas to numberrs
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+//sorts bar arrays by most viewed
 function categorize(temp_labels,numbersA){
     
   var temp_numbers=[]
@@ -42,7 +38,6 @@ function categorize(temp_labels,numbersA){
     for (a of numbersA) temp_numbers.push(a);
 
     numbersA.sort( function( a , b){
-      console.log('----')
       if(a < b) return 1;
       if(a > b) return -1;
       return 0;
@@ -54,10 +49,7 @@ function categorize(temp_labels,numbersA){
 }
 
 
-
-
-
-
+//function to create gender bar chart and gender table
 function createBar(gender_df,title_rank){
 
   var men_titles=[]
@@ -90,7 +82,7 @@ function createBar(gender_df,title_rank){
     }
   })
 
-  //sort sub array and then chart top 5 subcategories
+
   x1=[]
   y1=[]
   Object.entries(f_new_sub).forEach(([key,value])=>{
@@ -116,13 +108,8 @@ function createBar(gender_df,title_rank){
     x2.pop()
     y2.pop()
   }
-
-  console.log(x2)
   x3=x1.concat(x2)
   y3=y1.concat(y2)
-
-  console.log(x3)
-
 
   //Creates Trace
   var trace1 = {
@@ -133,7 +120,7 @@ function createBar(gender_df,title_rank){
       hovertemplate: 
       '<b>%{x}<b>'+
       '<br>-------<br>'+
-      '<i>%{text}</i>'+
+      '<i>%{y}</i>'+
       '<extra></extra>',
       orientation: 'v',
       textfont: {
@@ -158,7 +145,6 @@ function createBar(gender_df,title_rank){
         color:'white',
         size:24},
     },
-      //title_x: 0,
       annotations: [
         {
           font: {
@@ -214,12 +200,11 @@ function createBar(gender_df,title_rank){
       paper_bgcolor: 'rgba(0,0,0,0)',
       plot_bgcolor: 'rgba(0,0,0,0)',
       xanchor: 'left',
-      display:'none',
-      //grid: {rows: 1, columns: 2, pattern: 'independent'}
+
   }
   Plotly.newPlot("bar", myData,layout,{displayModeBar: false});
 
-  //Create Rank Chart Here
+  //creates gender table for top 5 shows
   tbody_women.html("")
   tbody_men.html("")
   for (i=0;i<=4;i++){
@@ -235,7 +220,8 @@ function createBar(gender_df,title_rank){
   }
 
 }
-  
+
+//function to sort views by genre
 function pie_categorize(gender_df){
 
   men_genre_list_org={'Comedy':0,'Drama':0,'Crime':0,'Crime Drama':0,'Action':0,'Action Crime':0,'Horror':0,'Science Fiction':0,
@@ -247,7 +233,6 @@ function pie_categorize(gender_df){
   the_gender='women'
   gender_trigger=0
   current_genre=""
-  console.log(gender_df)
  
   gender_df.forEach((shows) => {
 
@@ -273,9 +258,8 @@ function pie_categorize(gender_df){
 
 }
 
-
+//function to draw gender pie charts
 function pieChart(women_the_genre_list,men_the_genre_list){
-
 
   var x=[]
   var y=[]
@@ -304,8 +288,12 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     hole: 0.5,
     pull: [0, 0, 0, 0, 0,0.2,0,0],
     direction: 'clockwise',
+    hovertemplate: 
+    '<b>%{label}<b>'+
+    '<br>-------<br>'+
+    '<i>%{value}</i>'+
+    '<extra></extra>',
     marker: {
-      //colors: ['#CDDC39', '#673AB7', '#F44336', '#00BCD4', '#607D8B'],
       line: {
         color: 'black',
         width: 0
@@ -334,6 +322,11 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     labels: y2,
     hole: 0.5,
     pull: [0, 0, 0, 0, 0,0.2,0,0],
+    hovertemplate: 
+    '<b>%{label}<b>'+
+    '<br>-------<br>'+
+    '<i>%{value}</i>'+
+    '<extra></extra>',
     direction: 'clockwise',
     marker: {
       line: {
@@ -360,6 +353,7 @@ function pieChart(women_the_genre_list,men_the_genre_list){
   var data = [Women,Men];
 
   var layout = {
+    display:'none',
     title: {
       x:.2,
       y:.99,
@@ -392,7 +386,7 @@ function pieChart(women_the_genre_list,men_the_genre_list){
         font: {
           color:'white',
           size:22}
-      }
+      },
     ],
     showlegend: true,
     autosize: false,
@@ -416,11 +410,9 @@ function pieChart(women_the_genre_list,men_the_genre_list){
       }
     },
     grid: {rows: 1, columns: 2},
-    display:'none'
   };
 
-  
-  Plotly.newPlot("f-pie-chart", data, layout);
+  Plotly.newPlot("f-pie-chart", data, layout,{displayModeBar: false});
 
 }
 
@@ -436,15 +428,13 @@ var tbody=d3.select("#show-table");
 var tbody_women=d3.select("#table_women");
 var tbody_men=d3.select("#table_men");
 
-
+//main function - runs everytime a new category is selected
 function new_select(){
-  //d3.select("tbody").html("")
-
 
   row_count=0
   var url = `/api/region?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
-    console.log(response)
+
     list_genre=[]
     title_rank=[]
     response.forEach((shows => {
@@ -465,18 +455,6 @@ function new_select(){
               temp_count=0
               contain_streaming_service=false
               value.split("|").forEach((item)=> {
-                if(temp_count==1) {
-                  if (item==" Disney+" || item==" HBO" || item==" Netflix" || item==" Hulu"){contain_streaming_service=true}
-                  else {
-                    //console.log("1: "+item)
-                    //if(item=="Science Ficcategorize(item)
-                  }
-                }
-
-                if(temp_count==2 && contain_streaming_service==true){
-                  //console.log("2: "+item)
-                  //categorize(item)
-                }
 
                 if (!list_genre.includes(item)){list_genre.push(item)}
                 if(temp_count>1){
@@ -512,14 +490,13 @@ function new_select(){
   })
 }
 
+//function to retrieve gender data 
 function getGenderData(title_rank){
-
 
   var url_gender = `/api/gender?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   
   d3.json(url_gender).then(function (responseG) {
     
-    //console.log(responseG)
     pie_categorize(responseG);
     createBar(responseG,title_rank);
   })
@@ -527,7 +504,5 @@ function getGenderData(title_rank){
 }
 
 
-
-
-
+//run on first loading
 new_select();
