@@ -164,7 +164,6 @@ sdnotify==0.3.2
 seaborn==0.11.1
 selenium==3.141.0
 Send2Trash==1.5.0
-setuptools==47.1.1.post20200604
 six==1.15.0
 sklearn==0.0
 sniffio==1.2.0
