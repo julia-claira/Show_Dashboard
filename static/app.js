@@ -139,7 +139,7 @@ function createBar(gender_df,title_rank){
   //Layout and Plot
   layout = {
       title: {text:"Science Fiction Sub-Genre Preference",
-      x:0.09,
+      x:0.02,
       y:.99,
       font: {
         color:'white',
@@ -174,7 +174,7 @@ function createBar(gender_df,title_rank){
       ],
       showlegend: false,
       autosize: false,
-      width: 600,
+      width: 640,
       height: 470,
       margin: {
         l: 45,
