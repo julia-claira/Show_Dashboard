@@ -28,7 +28,7 @@ app=Flask(__name__)
 @app.route("/")
 def home():
     #return 'Hello, World!'
-    return return_table
+    return return_table()
     #return render_template("index.html")
 
 
