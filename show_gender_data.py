@@ -1,13 +1,11 @@
 import pandas as pd
-from .app import db
-from sqlalchemy.sql import text
+import sqlite3
 
 #function does an sql query by gender
 def return_gender_table(region,generation,category,gender):
     
     #set up sqlite
-    #connection = sqlite3.connect('flix.db')
-    connection = db
+    connection = sqlite3.connect('flix.db')
 
     #assemble query
 
