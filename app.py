@@ -28,9 +28,9 @@ app=Flask(__name__)
 
 @app.route("/")
 def home():
-    #return 'Hello, World!'
+    return 'Hello, World!'
    # return show_data.return_table()
-    return render_template("index.html")
+    #return render_template("index.html")
 
 
 # Create api route for ml data by REGION
