@@ -1,5 +1,5 @@
 import pandas as pd
-#import sqlite3
+import sqlite3
 
 #function does an sql query by gender
 def return_gender_table(region,generation,category,gender):
