@@ -9,11 +9,12 @@ from flask import (
     render_template,
     jsonify,
     request)
-#import pandas as pd
+import pandas as pd
+import sqlite3
 
 # import function
-#from .show_data import return_table
-#from .show_gender_data import get_gender_data
+from .show_data import return_table
+from .show_gender_data import get_gender_data
 
 
 # In[3]:
