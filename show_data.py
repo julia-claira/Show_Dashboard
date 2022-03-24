@@ -1,8 +1,9 @@
+
 import pandas as pd
-#import sqlite3
 
-
-def return_table(region,gender,generation,category):
+def return_table():
+    return 'hey'
+def return_table2(region,gender,generation,category):
     #set up sqlite
     connection = sqlite3.connect('flix.db')
     

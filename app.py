@@ -10,11 +10,11 @@ from flask import (
     jsonify,
     request)
 import pandas as pd
-import sqlite3
+#import sqlite3
 
 # import function
 from .show_data import return_table
-from .show_gender_data import get_gender_data
+#from .show_gender_data import get_gender_data
 
 
 # In[3]:
@@ -28,7 +28,8 @@ app=Flask(__name__)
 @app.route("/")
 def home():
     #return 'Hello, World!'
-    return render_template("index.html")
+    return return_table
+    #return render_template("index.html")
 
 
 # Create api route for ml data by REGION
