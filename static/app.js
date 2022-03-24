@@ -174,8 +174,8 @@ function createBar(gender_df,title_rank){
       ],
       showlegend: false,
       autosize: false,
-      width: 700,
-      height: 420,
+      width: 600,
+      height: 470,
       margin: {
         l: 45,
         r: 150,
