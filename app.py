@@ -13,7 +13,7 @@ import pandas as pd
 #import sqlite3
 
 # import function
-from .show_data import return_table
+import show_data
 #from .show_gender_data import get_gender_data
 
 
@@ -28,7 +28,7 @@ app=Flask(__name__)
 @app.route("/")
 def home():
     #return 'Hello, World!'
-    return return_table()
+    return show_data.return_table()
     #return render_template("index.html")
 
 
