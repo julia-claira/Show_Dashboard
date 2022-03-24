@@ -175,7 +175,7 @@ function createBar(gender_df,title_rank){
       showlegend: false,
       autosize: false,
       width: 700,
-      height: 520,
+      height: 420,
       margin: {
         l: 45,
         r: 150,
@@ -391,7 +391,7 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     showlegend: true,
     autosize: false,
     width: 700,
-    height: 420,
+    height: 520,
     margin: {
       l: 10,
       r: 10,
