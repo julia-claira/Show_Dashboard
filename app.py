@@ -14,7 +14,7 @@ import sqlite3
 
 # import function
 import show_data
-import show_gender_data
+#import show_gender_data
 
 
 
