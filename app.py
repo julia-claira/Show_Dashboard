@@ -40,7 +40,7 @@ def apiml():
     generation = request.args.get("generation", type=str)
     category = request.args.get("category", type=str)
 
-    return return_table(region,'all',generation,category).to_json(orient='records')
+    #return return_table(region,'all',generation,category).to_json(orient='records')
 
 
 # Create api route for data by gender
