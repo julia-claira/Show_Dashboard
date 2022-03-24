@@ -1,12 +1,10 @@
 import pandas as pd
+#import sqlite3
 
-from .app import db
-from sqlalchemy.sql import text
 
 def return_table(region,gender,generation,category):
     #set up sqlite
-    #connection = sqlite3.connect('flix.db')
-    connection = db
+    connection = sqlite3.connect('flix.db')
     
     
     #assemble query

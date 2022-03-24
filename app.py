@@ -10,9 +10,10 @@ from flask import (
     jsonify,
     request)
 import pandas as pd
-import os
 
-
+# import function
+from .show_data import return_table
+from .show_gender_data import get_gender_data
 
 
 # In[3]:
@@ -24,18 +25,8 @@ app=Flask(__name__)
 # In[4]:
 
 
-from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///flix.db"
 
-# remove tracking modifications
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Create database variable
-db = SQLAlchemy(app)
-
-# import function
-from .show_data import return_table
-from .show_gender_data import get_gender_data
 
 # In[10]:
 
