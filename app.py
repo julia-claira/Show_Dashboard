@@ -9,11 +9,11 @@ from flask import (
     render_template,
     jsonify,
     request)
-import pandas as pd
+#import pandas as pd
 
 # import function
-from .show_data import return_table
-from .show_gender_data import get_gender_data
+#from .show_data import return_table
+#from .show_gender_data import get_gender_data
 
 
 # In[3]:
@@ -65,11 +65,7 @@ def apigender():
     #return jsonify(get_gender_data(region,generation,category))
     
 
-
-@app.route("/jsonify")
-def rt():
-    return return_table().to_json(orient='records')
-
+#
 
 # In[14]:
 
