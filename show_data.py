@@ -1,5 +1,5 @@
 import pandas as pd
-import sqlite3
+#import sqlite3
 
 
 def return_table(region,gender,generation,category):
