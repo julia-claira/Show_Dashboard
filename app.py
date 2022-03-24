@@ -22,24 +22,12 @@ from flask import (
 app=Flask(__name__)
 
 
-# In[4]:
-
-
-
-
-
-# In[10]:
 
 
 @app.route("/")
 def home():
-    return 'Hello, World!'
-    #return render_template("index.html")
-
-@app.route("/api/test", methods=["GET"])
-def testl():
-    hello_dict={"Hello":"World"}
-    return jsonify(hello_dict)
+    #return 'Hello, World!'
+    return render_template("index.html")
 
 
 # Create api route for ml data by REGION
@@ -65,9 +53,6 @@ def apigender():
     #return jsonify(get_gender_data(region,generation,category))
     
 
-#
-
-# In[14]:
 
 
 if __name__=="__main__":
