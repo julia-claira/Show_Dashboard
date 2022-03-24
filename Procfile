@@ -1,2 +1,2 @@
 web: gunicorn app:app
-Web: node dist/server.js
+web: node index.js
