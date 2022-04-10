@@ -428,9 +428,10 @@ var tbody=d3.select("#show-table");
 var tbody_women=d3.select("#table_women");
 var tbody_men=d3.select("#table_men");
 
+
 //main function - runs everytime a new category is selected
 function new_select(){
-
+  tbody.html("")
   row_count=0
   var url = `/api/region?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
   d3.json(url).then(function (response) {
