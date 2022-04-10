@@ -4,7 +4,7 @@
 
 ## Description 
 
-A suplimentary dashboard I created for a pitch to Netflix demonstrating the viablility of an animated space-based science fiction show geared toward girls.
+A suplimentary dashboard I created for a pitch to Netflix that demonstrates the viablility of an animated space-based, science fiction show geared toward girls.
 
 
 
