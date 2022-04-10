@@ -1,6 +1,6 @@
 ![Sample Graph](Resources/logo.png)
 
-# Sales Forecast - Animated Graphs
+# Science Fiction Streaming Dashboard
 
 ## Description 
 
@@ -13,7 +13,6 @@ A dashboard which includes sales data forecast by machine learning, and an analy
 * [Tools](#Tools)
 * [Data](#Data)
 * [Graphs](#Graphs)
-* [Contributors](#Contributors)
 * [Contact](#Contact)
 
 
@@ -22,38 +21,28 @@ A dashboard which includes sales data forecast by machine learning, and an analy
 
 This app is hosted on Heroku:
 
-[Sales Forecast App](https://instantoffice.herokuapp.com/)
-
-
-  
-## Animated Graphs
-
-I created these animated graphs with JavaScript and D3 as a way to dynamically and iteractively impart the data. The goal was to get the user engaged with the data, as I believe that facilitates understanding and retention while encouraging exploration. Mousing over any month on the main graph triggers the animation for the other graphs.
-
-![Animated Graphs](SalesApp/static/images/animated_graph.png)
-
+[Science Fiction Strreaming App](https://scifi-stream.herokuapp.com/)
 
 
 ## Tools
 
-JavaScript, D3, Bootstrap, Jupyter Notebook, HTML5, CSS, Flask, Python, SQLite, SQLAlchemy, Facebook Prophet (machine learning)
+PostgreSQL, Python, Flask, Pandas, Splinter, JavaScript, D3, Bootstrap, Jupyter Notebook, HTML5, CSS, SQLite, SQLAlchemy
 
 
 
 ## Data
-Sample data set from [Kaggle](https://www.kaggle.com/rohitsahoo/sales-forecasting).  Forecast modeling was completed with Facebook Prophet. 
-Results of the forecast models were saved as CSVs to the Resource folder and then brought into the heroku app.
+I scraped the data from [FlixPatrol](https://www.flixpatrol.com) using Splinter and BeautifulSoup in Python, then inserrted results into a SQL database.
 
-Data was cleaned in SQLite, which I further processed in JavaScript.
+The Flask App queries the SQL database, and the data is further processed in JavaScript.
+
+![Sample Graph](images/data1.jpg)
 
 
 
-## Contributors
-The contributors to this project are:
-* [@hamiltojogo](https://github.com/hamiltojogo)
-* [@KDrummerGirlLB](https://github.com/DrummerGirlLB)
-* [@Claira](https://github.com/julia-claira)
-* [@KristaJoy](https://github.com/KristaJoy)
+## Graphs
+
+![Sample Graph](images/graph1.jpg)
+
 
 
 
