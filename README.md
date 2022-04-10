@@ -4,7 +4,7 @@
 
 ## Description 
 
-A dashboard which includes sales data forecast by machine learning, and an analysis of historical sales. (This is a copy of the original repository to highlight my personal contributions on the project. The other contributors are listed at the bottom.)
+A suplimentary dashboard I created for a pitch to Netflix demonstrating the viablility of an animated space-based science fiction show geared toward girls.
 
 
 
@@ -31,7 +31,8 @@ PostgreSQL, Python, Flask, Pandas, Splinter, JavaScript, D3, Bootstrap, Jupyter 
 
 
 ## Data
-I scraped the data from [FlixPatrol](https://www.flixpatrol.com) using Splinter and BeautifulSoup in Python, then inserrted results into a SQL database.
+
+I scraped the data from [FlixPatrol](https://www.flixpatrol.com) using Splinter and BeautifulSoup in Python, then inserted results into a SQL database.
 
 The Flask App queries the SQL database, and the data is further processed in JavaScript.
 
@@ -40,6 +41,8 @@ The Flask App queries the SQL database, and the data is further processed in Jav
 
 
 ## Graphs
+
+In exploring science fiction streaming prefernce by gender, I found no marked difference between men and women in the youngest demographic.
 
 ![Sample Graph](images/graph1.jpg)
 
