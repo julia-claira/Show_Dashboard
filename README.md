@@ -1,5 +1,3 @@
-![Sample Graph](Resources/logo.png)
-
 # Science Fiction Streaming Dashboard
 
 ## Description 
