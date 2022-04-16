@@ -504,6 +504,8 @@ function getGenderData(title_rank){
   
 }
 
+new_select()
+
 
 //run on first loading
 //////new_select();
