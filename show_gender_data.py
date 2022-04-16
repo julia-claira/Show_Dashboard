@@ -12,10 +12,10 @@ def return_gender_table(region,generation,category,gender):
 
     if region=='all' or generation=='all':
         sql_query=f"select gender,title, sum(cast(replace(view,',','') as integer)) as views, genre \
-        from flix_shows where gender='{gender}'"
+        from flix_shows_kidz where gender='{gender}'"
     else:
          sql_query=f"select gender,title,cast(replace(view,',','') as integer) as views, genre \
-         from flix_shows where gender='{gender}'"
+         from flix_shows_kidz where gender='{gender}'"
         
     if region!='all': 
         sql_query=sql_query+f"and viewing_country='{region}'"
@@ -31,7 +31,7 @@ def return_gender_table(region,generation,category,gender):
     print(sql_query)
     df=pd.read_sql_query(sql_query,connection)
     
-    #this is working but need to have views add up on group by but I want to keep the comma as well"
+
     
     return df 
 
