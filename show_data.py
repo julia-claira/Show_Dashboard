@@ -10,9 +10,9 @@ def return_table(region,gender,generation,category):
     #assemble query
     option_count=0
     if region=='all' or gender=='all' or generation=='all':
-        sql_query="select *, sum(cast(replace(view,',','') as integer)) as views from flix_shows_kidz"
+        sql_query="select *, sum(cast(replace(view,',','') as integer)) as views from flix_shows"
     else:
-         sql_query="select *,cast(replace(view,',','') as integer) as views from flix_shows_kidz"
+         sql_query="select *,cast(replace(view,',','') as integer) as views from flix_shows"
     
     if region!='all' or gender!='all' or generation!='all' or category!='all':
         sql_query=sql_query+" where"
