@@ -92,7 +92,7 @@ function createBar(gender_df,title_rank){
           temp_sub={[shows['genre_sub']]:0}
           f_new_sub=Object.assign(temp_sub,f_new_sub)
         }
-        f_new_sub[shows['genre_sub']]=f_new_sub[shows['genre_sub']]+shows['views']/1000
+        f_new_sub[shows['genre_sub']]=f_new_sub[shows['genre_sub']]+shows['views']
       }
       else{
         men_titles.push(shows['title'])
@@ -102,7 +102,7 @@ function createBar(gender_df,title_rank){
           temp_sub={['*'+shows['genre_sub']]:0}
           m_new_sub=Object.assign(temp_sub,m_new_sub)
         }
-        m_new_sub['*'+shows['genre_sub']]=m_new_sub['*'+shows['genre_sub']]+shows['views']/1000
+        m_new_sub['*'+shows['genre_sub']]=m_new_sub['*'+shows['genre_sub']]+shows['views']
       }
     }
   })
@@ -136,6 +136,7 @@ function createBar(gender_df,title_rank){
   x3=x1.concat(x2)
   y3=y1.concat(y2)
 
+
   //Creates Trace
   var trace1 = {
       type: 'bar',
@@ -158,7 +159,6 @@ function createBar(gender_df,title_rank){
         'rgb(142,124,195)','rgb(142,124,195)','rgb(142,124,195)','rgb(142,124,195)','rgb(142,124,195)']
       }
   };
-  
   var myData=[trace1];
 
   //Layout and Plot
@@ -178,7 +178,7 @@ function createBar(gender_df,title_rank){
           showarrow: false,
           text: 'Women',
           x: 1.48,
-          y: y3[0]/1.1,
+          y: y3[0]*.91,
           font: {
             color:'white',
             size:22}
@@ -191,7 +191,7 @@ function createBar(gender_df,title_rank){
           showarrow: false,
           text: 'Men',
           x: 6.1,
-          y: y3[0]/1.1,
+          y: y3[0]*.91,
           font: {
             color:'white',
             size:22}
@@ -329,8 +329,6 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     direction: 'clockwise',
     hovertemplate: 
     '<b>%{label}<b>'+
-    '<br>-------<br>'+
-    '<i>%{value}</i>'+
     '<extra></extra>',
     marker: {
       line: {
@@ -363,8 +361,6 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     pull: pieChartPopOut,
     hovertemplate: 
     '<b>%{label}<b>'+
-    '<br>-------<br>'+
-    '<i>%{value}</i>'+
     '<extra></extra>',
     direction: 'clockwise',
     marker: {
