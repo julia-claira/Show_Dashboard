@@ -1,6 +1,6 @@
 //The Filter Selection Form------------------------------------------------------------------
 
-//User Events
+//User Events do this in jupyter 
 var genre_list=['Comedy','Sitcom','Animated','For Girls','Animation','Adult Animation','Fantasy','Supernatural','History','Vikings','HBO','Dragons','Netflix',
  'Wizards','Superhero','DC','Crime','Case of the week','Science Fiction','Postapocalypse','Mystery','Drama','Gangsters','For Older Kids','Doctors',
  'Drug Cartel','Serial killer','Vampires','Action','Prison','Teens','Politics','Buddies','Horror','Terorrism','Future','Disaster','Business','For babies','Murder',
@@ -18,16 +18,36 @@ var categoryField= d3.select("#category");//filter for shape
 categoryField.on("change", new_select);
 
 var countryField= d3.select("#country");//filter for country
-countryField.on("change", new_select);
+countryField.on("change", appendDropdown);
 
 
 var generationField= d3.select("#generation");//filter for city
 generationField.on("change", new_select);
 
+//function to append generation drop-down based on country selection
+function appendDropdown(){
+  
+  generationField.html("")//reset dropdown
+  var dropDownOptions={'all':'All','baby-boomers':'Baby Boomers','generation-x':'Generation X',
+  'generation-y':'Generation Y','generation-z':'Generation Z'}
+
+  //append Kids category if country is US
+  if (countryField.property("value")=='united-states'){
+    dropDownOptions['kids']='Kids/Young Adult'
+  };
+
+  //map to the dropdown
+  Object.entries(dropDownOptions).forEach(([key,value])=>{
+    generationField.append("option").text(value).attr('value',key);
+  });
+   //run main
+   new_select();
+};
+
 //function adds commas to numberrs
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
+};
 
 //sorts bar arrays by most viewed
 function categorize(temp_labels,numbersA){
@@ -53,16 +73,20 @@ function categorize(temp_labels,numbersA){
 function createBar(gender_df,title_rank){
 
   var men_titles=[]
+  var men_titles_view=[]
   var women_titles=[]
+  var women_titles_view=[]
   
   var f_new_sub={};
   var m_new_sub={};
+
 
   gender_df.forEach((shows) => {
     
     if (shows['genre_main']=='Science Fiction'){
       if(shows['gender']=='women'){
         women_titles.push(shows['title'])
+        women_titles_view.push(Math.round(shows['views']/1000).toString()+'k')
         
         if (!(shows['genre_sub'] in f_new_sub)){
           temp_sub={[shows['genre_sub']]:0}
@@ -72,6 +96,7 @@ function createBar(gender_df,title_rank){
       }
       else{
         men_titles.push(shows['title'])
+        men_titles_view.push(Math.round(shows['views']/1000).toString()+'k')
 
         if (!('*'+shows['genre_sub'] in m_new_sub)){
           temp_sub={['*'+shows['genre_sub']]:0}
@@ -210,13 +235,15 @@ function createBar(gender_df,title_rank){
   for (i=0;i<=4;i++){
     curr_row=tbody_women.append("tr")
     curr_row.append("td").text(title_rank.indexOf(women_titles[i])+1)
-    curr_row.append("td").text(women_titles[i])
+    curr_row.append("td").text(women_titles[i].substring(0,12))
+    curr_row.append("td").text(women_titles_view[i])
   }
 
   for (i=0;i<=4;i++){
     curr_row=tbody_men.append("tr")
     curr_row.append("td").text(title_rank.indexOf(men_titles[i])+1)
-    curr_row.append("td").text(men_titles[i])
+    curr_row.append("td").text(men_titles[i].substring(0,12))
+    curr_row.append("td").text(men_titles_view[i])
   }
 
 }
@@ -280,13 +307,25 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     }
   })
 
+  //creates array so that scifi pops out of pie chart
+  pieChartPopOut=[]
+  for(i=0;i<y2.length;i++){
+    if (y2[i]=='Science Fiction') pieChartPopOut.push(.2)
+    else if (y2[i]=='Superhero' && i==10){
+      y2[i]='Hero'
+      y[i]='Hero'
+      pieChartPopOut.push(0)
+    }
+    else pieChartPopOut.push(0)
+  }
+
   var Women = {
     domain: {column: 0},
     type: "pie",
     values: x,
     labels: y,
     hole: 0.5,
-    pull: [0, 0, 0, 0, 0,0.2,0,0],
+    pull: pieChartPopOut,
     direction: 'clockwise',
     hovertemplate: 
     '<b>%{label}<b>'+
@@ -321,7 +360,7 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     values: x2,
     labels: y2,
     hole: 0.5,
-    pull: [0, 0, 0, 0, 0,0.2,0,0],
+    pull: pieChartPopOut,
     hovertemplate: 
     '<b>%{label}<b>'+
     '<br>-------<br>'+
@@ -390,13 +429,13 @@ function pieChart(women_the_genre_list,men_the_genre_list){
     ],
     showlegend: true,
     autosize: false,
-    width: 700,
+    width: 710,
     height: 520,
     margin: {
       l: 10,
       r: 10,
       b: 10,
-      t: 120,
+      t: 100,
       pad: 0
     },
     paper_bgcolor: 'rgba(0,0,0,0)',
@@ -419,18 +458,18 @@ function pieChart(women_the_genre_list,men_the_genre_list){
 //MAIN-----------------------------------------------------------------------------------------
 
 
-//use D3 to select table elements
-var table=d3.select("#ufo-table");
 //use D3 to select table head
 var thead=d3.select("thead");
  //use D3 to select table body
-var tbody=d3.select("#show-table");
-var tbody_women=d3.select("#table_women");
-var tbody_men=d3.select("#table_men");
+var tbody=d3.select("#show-table").select("tbody");
+var tbody_women=d3.select("#table_women").select("tbody");
+var tbody_men=d3.select("#table_men").select("tbody");
 
 
 //main function - runs everytime a new category is selected
 function new_select(){
+  
+
   tbody.html("")
   row_count=0
   var url = `/api/region?region=${countryField.property("value")}&generation=${generationField.property("value")}&category=${categoryField.property("value")}`;
@@ -502,10 +541,10 @@ function getGenderData(title_rank){
     createBar(responseG,title_rank);
   })
   
-}
+};
 
-new_select()
+//Run on first loading website
+appendDropdown();
+new_select();
 
 
-//run on first loading
-//////new_select();

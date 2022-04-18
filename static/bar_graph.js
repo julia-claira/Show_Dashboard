@@ -307,7 +307,7 @@ function optionChanged() {
     bottomAxis.tickFormat((d, i) =>myTickLabels[i])
     .tickValues(d3.range(myTickLabels.length))
 
-    chartGroup.append('rect').attr('width',width).attr('height',height).attr('fill','white').attr('opacity',.7)
+    chartGroup.append('rect').attr('width',width).attr('height',height).attr('fill','black').attr('opacity',.2)
    
 
     // call the x axis
@@ -384,7 +384,7 @@ function optionChanged() {
 
       //legend
           
-        chartGroup.append('rect').attr('fill',"white").attr("width", 97).attr("height", 25)
+        chartGroup.append('rect').attr('fill',"#2b3e4e ").attr("width", 97).attr("height", 25)
         .attr('x',30).attr('y',33).attr('opacity',1);
      
         chartGroup.append('rect').attr('fill',"#17CAE2").attr("width", 15).attr("height", 3)
@@ -396,10 +396,10 @@ function optionChanged() {
         chartGroup.append('text').text('Views 2020').attr("x", 50).attr("y", 43)
         .attr('font-size','11.5px').style("fill","#17CAE2")
 
-        chartGroup.append('text').text('Projected 2021').attr("x", 50).attr("y", 55)
+        chartGroup.append('text').text('Views 2021').attr("x", 50).attr("y", 55)
           .attr('font-size','11.5px').style("fill","#F29025")
         
-        chartGroup.append('rect').attr('fill',"white").attr("width", 97).attr("height", 25)
+        chartGroup.append('rect').attr('fill',"#2b3e4e ").attr("width", 97).attr("height", 25)
         .attr('x',30).attr('y',33).attr('opacity',0);
 
     //************************************************************************
@@ -410,7 +410,7 @@ function optionChanged() {
   
     //the percentage bars created
     svg.append("rect").attr("id","firstS").attr("width", 90).attr("height", 320)
-      .attr("x", 675).attr("y", -2).style("fill","white");
+      .attr("x", 675).attr("y", -2).style("fill","#2b3e4e");
 
     var middleBar=svg.append("rect").attr("id","firstS").attr("width", 18).attr("height", 300)
       .attr("x", 711).attr("y", 0).style("fill","#17CAE2");
@@ -418,13 +418,13 @@ function optionChanged() {
 
 
     svg.append("rect").attr("id","firstU").attr("width", 60).attr("height", 160)
-      .attr("x", 700).attr("y", -4).style("fill","white").attr("opacity",1);
+      .attr("x", 700).attr("y", -4).style("fill","#2b3e4e").attr("opacity",1);
     svg.append("rect").attr("id","firstD").attr("width", 60).attr("height", 160)
-      .attr("x", 700).attr("y", 161).style("fill","white").attr("opacity",1);
+      .attr("x", 700).attr("y", 161).style("fill","#2b3e4e").attr("opacity",1);
 
     //clip boxes
     svg.append("rect").attr("id","clipD").attr("width", 70).attr("height", 100)
-      .attr("x", 698).attr("y", 318).style("fill","white").attr("opacity",1);
+      .attr("x", 698).attr("y", 318).style("fill","#2b3e4e").attr("opacity",1);
 
     //text count positive
     svg.append("text").attr("id","firstUtext").text('0%')
@@ -551,7 +551,7 @@ function optionChanged() {
       .style('fill', '#17CAE2');
 
       trendText.style('fill','#17CAE2')
-      trendText2.style('fill','#17CAE2')
+      trendText2.style('fill','white')
 
       d3.select("#firstU").attr("width", 60).attr("height", 160)
         .attr("x", 700).attr("y", -4).attr("transform", `translate(0,0)`)
@@ -569,7 +569,7 @@ function optionChanged() {
         var myColor="#F29025"
         middleBar.transition().style("fill","#F29025").duration(1500)
         trendText.transition().style("fill","#F29025").duration(1500)
-        trendText2.transition().style("fill","#F29025").duration(1500)
+        trendText2.transition().style("fill","white").duration(1500)
         myBoxLine.transition().style("fill","#F29025").duration(1500)
 
         var myTextColor= "#C1731D"
@@ -579,7 +579,7 @@ function optionChanged() {
         var myColor="#17CAE2"
         middleBar.transition().style("fill",myColor).duration(1500)
         trendText.transition().style("fill",myColor).duration(1500)
-        trendText2.transition().style("fill",myColor).duration(1500)
+        trendText2.transition().style("fill",'white').duration(1500)
         myBoxLine.transition().style("fill",'myColor').duration(1500)
 
         var myTextColor= "#12a1b4"
@@ -653,7 +653,9 @@ function optionChanged() {
       //github trend!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       //github
       content={54300:[100,100,100],82142:[200,200,200],51051:[300,300,300],82761:[400,400,400],91350:[500,500,500],81476:[600,600,600],127708:[700,700,700],
-              203632:[800,800,800],194554:[900,900,900],211286:[1000,1000,1000],238474:[1100,1100,1100],257365:[1200,1200,1200],274499:[1300,1300,1300]}
+              203632:[800,800,800],194554:[900,900,900],211286:[1000,1000,1000],238474:[1100,1100,1100],257365:[1200,1200,1200],274499:[35,30,2]}
+      contentF={54300:[100,100,100],82142:[200,200,200],51051:[300,300,300],82761:[400,400,400],91350:[500,500,500],81476:[600,600,600],127708:[700,700,700],
+              203632:[800,800,800],194554:[900,900,900],211286:[1000,1000,1000],238474:[1100,1100,1100],257365:[1200,1200,1200],274499:[35,30,2]}
 
       trendCount.attr('opacity',0).style('fill','#17CAE2');
       trendCount.transition()
@@ -687,13 +689,51 @@ function optionChanged() {
   .tween("text", function() {
     var selection = d3.select(this);    // selection of node being transitioned
     var start = 0; // start value prior to transition
-    var end = content[Math.round(theMonthlyVal)][1];                    // specified end value
+    var end = content[Math.round(theMonthlyVal)][2];                    // specified end value
     var interpolator = d3.interpolateNumber(start,end); // d3 interpolator
 
    return function(t) { selection.text(`${numberWithCommas(Math.round(interpolator(t)))}%`); };  // return value         
 })
 .duration(1500)
 
+trendCount4.attr('opacity',0).style('fill','#17CAE2');
+trendCount4.transition()
+.attr('opacity',1).style("fill",myTextColor)
+.tween("text", function() {
+  var selection = d3.select(this);    // selection of node being transitioned
+  var start = 0; // start value prior to transition
+  var end = contentF[Math.round(theMonthlyVal)][0];                    // specified end value
+  var interpolator = d3.interpolateNumber(start,end); // d3 interpolator
+
+ return function(t) { selection.text(`${numberWithCommas(Math.round(interpolator(t)))}%`); };  // return value         
+})
+.duration(1500)
+
+trendCount5.attr('opacity',0).style('fill','#17CAE2');
+trendCount5.transition()
+.attr('opacity',1).style("fill",myTextColor)
+.tween("text", function() {
+var selection = d3.select(this);    // selection of node being transitioned
+var start = 0; // start value prior to transition
+var end = contentF[Math.round(theMonthlyVal)][1];                    // specified end value
+var interpolator = d3.interpolateNumber(start,end); // d3 interpolator
+
+return function(t) { selection.text(`${numberWithCommas(Math.round(interpolator(t)))}%`); };  // return value         
+})
+.duration(1500)
+
+trendCount6.attr('opacity',0).style('fill','#17CAE2');
+trendCount6.transition()
+.attr('opacity',1).style("fill",myTextColor)
+.tween("text", function() {
+var selection = d3.select(this);    // selection of node being transitioned
+var start = 0; // start value prior to transition
+var end = contentF[Math.round(theMonthlyVal)][2];                    // specified end value
+var interpolator = d3.interpolateNumber(start,end); // d3 interpolator
+
+return function(t) { selection.text(`${numberWithCommas(Math.round(interpolator(t)))}%`); };  // return value         
+})
+.duration(1500)
 
     //***BAR Arrow GRAPH*** finds the value for current month and two previous months***
       //checks to see if percentage is positive or negative then grows accordingly
@@ -858,7 +898,7 @@ function optionChanged() {
       Other.transition().attr("transform", `translate(0,0)`)
 
       trendText.transition().style('fill','#17CAE2').duration(10);
-      trendText2.transition().style('fill','#17CAE2').duration(10);
+      trendText2.transition().style('fill','white').duration(10);
       //small circle returns to normal size
       d3.select(this).transition()
         .duration(10)
@@ -891,6 +931,12 @@ function optionChanged() {
         trendCount2.transition().attr('opacity',0).style('fill','#17CAE2').duration(10);
         myBoxLine.transition().style('fill','#17CAE2').duration(10);
         trendCount3.transition().attr('opacity',0).style('fill','#17CAE2').duration(10);
+        myBoxLine.transition().style('fill','#17CAE2').duration(10);
+        trendCount4.transition().attr('opacity',0).style('fill','#17CAE2').duration(10);
+        myBoxLine.transition().style('fill','#17CAE2').duration(10);
+        trendCount5.transition().attr('opacity',0).style('fill','#17CAE2').duration(10);
+        myBoxLine.transition().style('fill','#17CAE2').duration(10);
+        trendCount6.transition().attr('opacity',0).style('fill','#17CAE2').duration(10);
         myBoxLine.transition().style('fill','#17CAE2').duration(10);
 
 
@@ -1031,12 +1077,12 @@ function optionChanged() {
   
 
     //box to make grid lighter
-    chartGroup2.append("rect").attr("width", width+20).attr("height", 80).attr('y',-20).attr('x',-10)
-      .attr('fill','white').attr('opacity',.7);
+    chartGroup2.append("rect").attr("width", width+2).attr("height", 80).attr('y',-20).attr('x',-1)
+      .attr('fill','black').attr('opacity',.2);
 
     //top bar
     chartGroup2.append("rect").attr("width", width+10).attr("height", 1).attr('y',-19).attr('x',-10)
-    .attr('fill','black').attr('opacity',.6);
+    .attr('fill','black').attr('opacity',.2);
 
 
 
@@ -1052,35 +1098,47 @@ function optionChanged() {
     .attr("x", -599).attr("y", 20+graphAdjust2).style("fill","#108c9d");
 
     var whitecrop=chartGroup2.append("rect").attr("width", 300).attr("height", 80)
-    .attr("x", -300).attr("y", -35+graphAdjust2).style("fill","white");
+    .attr("x", -300).attr("y", -35+graphAdjust2).style("fill","#2b3e4e");
 
-    var trendText2=svg2.append("text").attr("id","header").text("Content Makeup")
-    .attr("x", 674).attr("y",10).style("fill","#17CAE2").style('text-decoration',"underline")
+    var trendText2=svg2.append("text").attr("id","header").text("GIRL | BOY")
+    .attr("x", 674).attr("y",10).style("fill","white").style('text-decoration',"underline")
     .attr('font-size','14px').attr('opacity',1)
 
     var trendCount=svg2.append("text").attr("id","header").text("0")
-    .attr("x", 705).attr("y",29).style("fill","#12a1b4")
+    .attr("x", 715).attr("y",29).style("fill","#12a1b4")
     .attr('font-size','16px').attr('opacity',0).attr("font-weight","bold");
 
     var trendCount2=svg2.append("text").attr("id","header").text("0")
-    .attr("x", 705).attr("y",49).style("fill","#12a1b4")
+    .attr("x", 715).attr("y",49).style("fill","#12a1b4")
     .attr('font-size','16px').attr('opacity',0).attr("font-weight","bold");
 
     var trendCount3=svg2.append("text").attr("id","header").text("0")
-    .attr("x", 705).attr("y",69).style("fill","#12a1b4")
+    .attr("x", 715).attr("y",69).style("fill","#12a1b4")
+    .attr('font-size','16px').attr('opacity',0).attr("font-weight","bold");
+
+    var trendCount4=svg2.append("text").attr("id","header").text("0")
+    .attr("x", 674).attr("y",29).style("fill","#12a1b4")
+    .attr('font-size','16px').attr('opacity',0).attr("font-weight","bold");
+
+    var trendCount5=svg2.append("text").attr("id","header").text("0")
+    .attr("x", 67).attr("y",49).style("fill","#12a1b4")
+    .attr('font-size','16px').attr('opacity',0).attr("font-weight","bold");
+
+    var trendCount6=svg2.append("text").attr("id","header").text("0")
+    .attr("x", 674).attr("y",69).style("fill","#12a1b4")
     .attr('font-size','16px').attr('opacity',0).attr("font-weight","bold");
 
     svg2.append("text").text('Developed')
     .attr("x", 40).attr("y", 11+graphAdjust2)
-    .attr("font-size", "11px")
+    .attr("font-size", "12px").style('fill', 'white')
 
     svg2.append("text").text('Acquisition')
     .attr("x", 37).attr("y", 31+graphAdjust2)
-    .attr("font-size", "11px")
+    .attr("font-size", "12px").style('fill', 'white')
 
     svg2.append("text").text('Other')
     .attr("x", 61).attr("y", 51+graphAdjust2)
-    .attr("font-size", "11px")
+    .attr("font-size", "12px").style('fill', 'white')
 
 
 
