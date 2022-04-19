@@ -8,10 +8,10 @@ import pandas as pd
 import sqlite3
 
 # import function
-#import show_data
-#import show_gender_data
-from .show_data import return_table
-from .show_gender_data import get_gender_data
+import show_data
+import show_gender_data
+#from .show_data import return_table
+#from .show_gender_data import get_gender_data
 
 
 
@@ -25,8 +25,6 @@ app=Flask(__name__)
 
 @app.route("/")
 def home():
-    #return 'Hello, World!'
-   # return show_data.return_table()
     return render_template("index.html")
 
 
@@ -38,8 +36,8 @@ def apiml():
     generation = request.args.get("generation", type=str)
     category = request.args.get("category", type=str)
 
-    #show_data.return_table(region,'all',generation,category).to_json(orient='records')
-    return return_table(region,'all',generation,category).to_json(orient='records')
+    return show_data.return_table(region,'all',generation,category).to_json(orient='records')
+    #return return_table(region,'all',generation,category).to_json(orient='records')
 
 
 # Create api route for data by gender
@@ -50,8 +48,8 @@ def apigender():
     generation = request.args.get("generation", type=str)
     category = request.args.get("category", type=str)
     
-    #return show_gender_data.get_gender_data(region,generation,category).to_json(orient='records')
-    return get_gender_data(region,generation,category).to_json(orient='records')
+    return show_gender_data.get_gender_data(region,generation,category).to_json(orient='records')
+    #return get_gender_data(region,generation,category).to_json(orient='records')
 
 
 
