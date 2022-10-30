@@ -1,36 +1,56 @@
-Science Fiction Streaming Dashboard
-Description
+# Science Fiction Streaming Dashboard
+
+## Description 
+
 A suplimentary dashboard I created for a pitch to Netflix that demonstrates the viablility of an animated space-based, science fiction show geared toward girls.
 
-Table of Contents
-Run
-Tools
-Data
-Graphs
-Contact
-Run
+
+
+## Table of Contents
+* [Run](#Results)
+* [Tools](#Tools)
+* [Data](#Data)
+* [Graphs](#Graphs)
+* [Contact](#Contact)
+
+
+
+## Run
+
 This app is hosted on Heroku:
 
-Science Fiction Streaming App
+[Science Fiction Streaming App](https://sci-fi-dashboard.herokuapp.com/)
 
-Tools
+
+## Tools
+
 PostgreSQL, Python, Flask, Pandas, Splinter, JavaScript, D3, Bootstrap, Jupyter Notebook, HTML5, CSS, SQLite, SQLAlchemy
 
-Data
-I scraped the data from FlixPatrol using Splinter and BeautifulSoup in Python, then inserted results into a SQL database.
+
+
+## Data
+
+I scraped the data from [FlixPatrol](https://www.flixpatrol.com) using Splinter and BeautifulSoup in Python, then inserted results into a SQL database.
 
 The Flask App queries the SQL database, and the data is further processed in JavaScript.
 
-Sample Graph
+![Sample Graph](images/data1.jpg)
 
-Graphs
+
+
+## Graphs
+
 In exploring science fiction streaming prefernce by gender, I found no marked difference between men and women in the youngest demographic.
 
-Sample Graph
+![Sample Graph](images/graph1.jpg)
 
-Contact
+
+
+
+## Contact
+
 Feel free to contact me with examples or any questions via the information below:
 
-GitHub: @julia-claira
+GitHub: [@julia-claira](https://api.github.com/users/julia-claira)
 
 Email: julia-claira@gmail.com
